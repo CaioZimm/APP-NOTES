@@ -18,7 +18,7 @@
 
             @auth
                 <a wire:navigate href="/profile">perfil</a>
-                <button wire:click='logout' href="/">Logout</button>
+                <button wire:click='logout' href="/login">Logout</button>
             @endauth
             
           </div>
@@ -27,7 +27,7 @@
 
       <main class="flex justify-center items-center flex-col w-full h-[90vh]">
 
-        <h1> 12:34:42</h1>
+        <livewire:live-timer />
       
         <button class="flex items-center justify-center w-[7rem] h-[7rem] border border-black p-8 mt-4 bg-sky-600 text-[90px] text-yellow-50 rounded-[10rem] font-medium ease-in duration-300"> 
           + 
