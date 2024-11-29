@@ -12,8 +12,8 @@
             <a wire:navigate href="">anotações</a>
 
             @guest
-                <a wire:navigate href="/login">Entrar</a>
-                <a wire:navigate href="/register">Registrar</a>
+                <a wire:navigate href="{{ route('login') }}">Entrar</a>
+                <a wire:navigate href="{{ route('register') }}">Registrar</a>
             @endguest
 
             @auth

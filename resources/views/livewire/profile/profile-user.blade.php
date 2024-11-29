@@ -53,6 +53,7 @@
         </form>
 
         <p> Encerrar conta </p>
-        <button wire:submit='delete'> Deletar conta </button>
+        <button wire:click='delete({{ $user->id }})'> Excluir </button>
+        {{-- <button wire:click='delete'> Deletar conta </button> --}}
       </main>
 </div>

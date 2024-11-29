@@ -23,6 +23,15 @@ class ProfileUser extends Component
         return view('livewire.profile.profile-user');
     }
 
+    public function logout(Request $request){
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return $this->redirect('/', navigate:true);
+    }
+    
     public function update(){
         $validated = $this->validate([
             'name' => ['max: 255'],

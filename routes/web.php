@@ -11,11 +11,11 @@ Route::get('/a', function () {
 });
 
 // ------------------ Access - User ------------------- //
-Route::get('/register', Register::class);
+Route::get('/register', Register::class)->name('register');;
 Route::get('/login', Login::class)->name('login');
 
 // ------------------- Home-Page --------------------- //
-Route::get('/', Home::class);
+Route::get('/', Home::class)->name('home');
 
 // ---------------- Profile - User ------------------- //
 Route::get('/profile', ProfileUser::class);
