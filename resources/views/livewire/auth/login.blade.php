@@ -1,6 +1,6 @@
 <div>
-    <main class="w-full h-[60vh] flex items-center justify-center mt-32">
-        <form wire:submit='login' class="bg-slate-300 flex items-center justify-start flex-col border border-black w-[30rem] h-[35rem] p-4 rounded-md shadow-md shadow-slate-600">
+    <main class="w-full h-screen flex items-center justify-center">
+        <form wire:submit='login' class="bg-slate-300 flex items-center justify-start flex-col border border-black w-[30rem] h-[33rem] p-4 rounded-md shadow-md shadow-slate-600">
             <h1 class="text-4xl font-bold mb-[20px] mt-4">Login</h1>
 
             <label class="w-[90%] text-xl items-center mt-5">Email</label>

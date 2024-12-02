@@ -1,40 +1,51 @@
 <div>
     <header>
-        <nav class="flex border-b border-solid border-black">
-          <div class="w-16 items-center	flex justify-center">
+        <nav class="flex border-b border-solid bg-slate-200 border-black w-screen h-12 shadow-2xl shadow-slate-400">
+          <div class="w-20 items-center	flex justify-center">
             <a wire:navigate href="/">
-              home
+              <i class="fa-solid fa-house text-2xl"></i>
             </a>
           </div>
       
           <div class="flex flex-1 items-center justify-end w-[20rem] gap-16 pr-8">
-            <a wire:navigate href="">cronometro</a>
-            <a wire:navigate href="">anotações</a>
+            <a wire:navigate href="">
+              <i class="fa-solid fa-stopwatch text-2xl"></i>
+            </a>
+            <a wire:navigate href="">
+              <i class="fa-solid fa-note-sticky text-2xl"></i>
+            </a>
 
             @guest
-                <a wire:navigate href="{{ route('login') }}">Entrar</a>
-                <a wire:navigate href="{{ route('register') }}">Registrar</a>
+                <a wire:navigate href="{{ route('login') }}">
+                  <i class="fa-solid fa-right-to-bracket text-2xl"></i>
+                </a>
+
+                {{-- <a wire:navigate href="{{ route('register') }}">
+                  <i class="fa-solid fa-user-plus text-2xl"></i>
+                </a> --}}
             @endguest
 
             @auth
-                <a wire:navigate href="/profile">perfil</a>
-                <button wire:click='logout' href="/login">Logout</button>
+                <a wire:navigate href="{{ route('profile') }}">
+                  <i class="fa-solid fa-user text-2xl"></i>
+                </a>
+                <button wire:click='logout' href="/login">
+                  <i class="fa-solid fa-right-from-bracket text-2xl"></i>
+                </button>
             @endauth
             
           </div>
         </nav>
       </header>
 
-      <main class="flex justify-center items-center flex-col w-full h-[90vh]">
+      <main class="flex justify-center items-center flex-col w-full h-[80vh]">
 
         <livewire:live-timer />
-      
-        <button class="flex items-center justify-center w-[7rem] h-[7rem] border border-black p-8 mt-4 bg-sky-600 text-[90px] text-yellow-50 rounded-[10rem] font-medium ease-in duration-300"> 
-          + 
-        </button>
-      
+        
+        <livewire:modal.create-notes />
+
         <a wire:click='showNotes' href="" class="mt-[3rem] text-[20px] font-[sans-serif] underline"> 
-          Ver minhas anotações 
+          Ver minhas anotações
         </a>
       </main>
 </div>
