@@ -23,9 +23,10 @@ class User extends Authenticatable
         'password',
     ];
 
-    // public function notes() {
-    //     return $this->hasMany(Note::class); // UM Usuário pode POSSUIR MUITAS Anotações;
-    // }
+    public function notes() {
+        return $this->hasMany(Notes::class); // UM Usuário pode POSSUIR MUITAS Anotações;
+    }
+    
     /**
      * The attributes that should be hidden for serialization.
      *

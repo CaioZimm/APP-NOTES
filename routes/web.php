@@ -18,4 +18,4 @@ Route::get('/login', Login::class)->name('login');
 Route::get('/', Home::class)->name('home');
 
 // ---------------- Profile - User ------------------- //
-Route::get('/profile', ProfileUser::class);
+Route::get('/profile', ProfileUser::class)->name('profile');
