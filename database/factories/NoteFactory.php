@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notes>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Note>
  */
 class NoteFactory extends Factory
 {
@@ -21,7 +21,7 @@ class NoteFactory extends Factory
             'user_id' => User::pluck('id')->random(),
             'title' => fake()->sentence(3),
             'description' => fake()->paragraph(),
-            'date' => fake()->date()
+            'date' => fake()->date(),
         ];
     }
 }

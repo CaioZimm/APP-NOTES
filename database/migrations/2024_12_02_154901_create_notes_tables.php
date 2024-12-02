@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notes', function (Blueprint $table){
+        Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->date('date');
             $table->timestamps();
 
-            //Relacionamento VÁRIOS anotações para 1 Usuário;
+            // Relacionamento VÁRIAS Anotações para UM usuário;
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
