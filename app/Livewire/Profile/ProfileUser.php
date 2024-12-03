@@ -42,11 +42,6 @@ class ProfileUser extends Component
 
         return $this->redirect('/profile', navigate: true);
     }
-
-    public function updatePassword(){
-
-    }
-
     public function delete(User $user){
         $user->delete();
         session()->flash('sucesso', 'Usuário excluído com sucesso!');
