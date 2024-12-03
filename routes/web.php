@@ -3,6 +3,7 @@
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Home;
+use App\Livewire\Notes\ShowNotes;
 use App\Livewire\Profile\ProfileUser;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,6 @@ Route::get('/', Home::class)->name('home');
 
 // ---------------- Profile - User ------------------- //
 Route::get('/profile', ProfileUser::class)->name('profile');
+
+// ----------------- Page - Notes -------------------- //
+Route::get('/notes', ShowNotes::class)->name('notes');

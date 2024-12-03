@@ -3,6 +3,37 @@
     hover:bg-slate-500"> 
       <p class="flex items-center justify-center font-bold text-center text-white text-7xl pb-4 ease-in duration-300 hover:text-black"> + </p>
     </button>
+
+    @guest
+    <div x-show="open" x-transition>
+        <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-55">
+          
+          <div class="border border-black bg-slate-200 h-[20rem] w-[20rem] flex items-center justify-between flex-col rounded-lg">
+              <div class="flex justify-end w-full">
+                  <button @click="open = false" class="mr-2">
+                      <i class="fa-solid fa-xmark text-3xl"></i>
+                  </button>
+              </div>
+  
+              <div class="w-full h-full flex items-center justify-between flex-col">
+                <h1 class="font-semibold text-2xl text-center mt-12">Para criar uma anotação você deve estar logado</h1>
+
+                <div class="flex items-center justify-center flex-col">
+                    <h2> 
+                        <a href="{{ route('login') }}" class="text-blue-600 font-medium underline text-xl">
+                            Clique aqui
+                        </a>
+                    </h2>
+
+                    <h2 class="mb-20">
+                        para ser redirecionado.
+                    </h2> 
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    @endguest
      
     @auth
     <div x-show="open" x-transition>

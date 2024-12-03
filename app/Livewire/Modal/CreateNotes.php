@@ -20,7 +20,7 @@ class CreateNotes extends Component
     public function create(){
         $this->validate([
             'title' => ['required', 'string'],
-            'description' => ['string'],
+            'description' => ['string', 'max:555'],
             'date' => ['required', 'date']
         ]);
 
