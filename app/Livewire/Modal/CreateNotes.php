@@ -4,13 +4,12 @@ namespace App\Livewire\Modal;
 
 use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 
 class CreateNotes extends Component
 {
-    public $title = '';
-    public $description = '';
-    public $date = '';
+    public $title, $description = '', $date;
 
     public function render()
     {
@@ -20,7 +19,7 @@ class CreateNotes extends Component
     public function create(){
         $this->validate([
             'title' => ['required', 'string'],
-            'description' => ['string', 'max:555'],
+            'description' => ['string', 'max:500'],
             'date' => ['required', 'date']
         ]);
 
@@ -31,6 +30,9 @@ class CreateNotes extends Component
             'date' => $this->date,
         ]);
 
-        return $this->redirect('/', navigate: true);
+        $message = "Registered successfully";
+        return Redirect::to('/')->with('message', $message);
+
+        // return $this->redirect('/', navigate: true);
     }
 }

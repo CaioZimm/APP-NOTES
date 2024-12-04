@@ -2,7 +2,7 @@
   @include('components.partials.navigation')
 
   <main class="w-full flex items-center justify-center flex-col pr-5 pl-5">
-    <h1 class="mt-7 font-bold text-4xl">Meu perfil</h1>
+    <h1 class="mt-8 font-bold text-4xl">Meu perfil</h1>
 
     <div class="w-[80%] mt-6 flex">
       <div class="w-[60%]">
