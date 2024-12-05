@@ -5,14 +5,16 @@ namespace App\Livewire\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class ProfileUser extends Component
 {
     public $user;
 
-    public $name;
-    public $email;
+    public $name, $email;
+
+    public $password, $new_password, $new_password_confirmation;
 
     public function mount(){
         $this->user = Auth::user();
@@ -33,15 +35,52 @@ class ProfileUser extends Component
     }
     
     public function update(){
-        $validated = $this->validate([
-            'name' => ['max: 255'],
-            'email' => ['email', 'string', 'unique:users']
+        $this->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255', 'unique:users,email,' . $this->user->id],
         ]);
 
-        $this->user->update($validated);
+        $data = [];
+        if ($this->name && $this->name !== $this->user->name) {
+            $data['name'] = $this->name;
+        }
+        if ($this->email && $this->email !== $this->user->email) {
+            $data['email'] = $this->email;
+        }
+        if (empty($data)) {
+            return;
+        }
 
+        $this->user->update($data);
+
+        session()->flash('sucessPersonal', 'Informações atualizadas com sucesso!');
         return $this->redirect('/profile', navigate: true);
     }
+
+    public function updatePassword(){
+        $this->validate([
+            'password' => ['required', 'max:16', 'min:4'],
+            'new_password' => ['required', 'confirmed', 'max:16', 'min:4'],
+        ]);
+
+        if (!Hash::check($this->password, $this->user->password)) {
+            $this->addError('samepassword', 'Sua senha atual está incorreta.');
+            return;
+        }
+        
+        if (Hash::check($this->new_password, $this->user->password)) {
+            $this->addError('otherpassword', 'A nova senha deve ser diferente da anterior.');
+            return;
+        }
+
+        $this->user->update([
+            'password' => bcrypt($this->new_password),
+        ]);
+
+        session()->flash('successPassword', 'Senha atualizada com sucesso!');
+        return $this->redirect('/profile', navigate: true);
+    }
+
     public function delete(User $user){
         $user->delete();
         session()->flash('sucesso', 'Usuário excluído com sucesso!');
