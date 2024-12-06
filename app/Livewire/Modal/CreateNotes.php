@@ -30,9 +30,7 @@ class CreateNotes extends Component
             'date' => $this->date,
         ]);
 
-        $message = "Registered successfully";
+        $message = "Anotação criada com sucesso!";
         return Redirect::to('/')->with('message', $message);
-
-        // return $this->redirect('/', navigate: true);
     }
 }
