@@ -7,7 +7,7 @@
       </div>
   
       <div class="flex flex-1 items-center justify-end w-[20rem] gap-16 pr-8">
-        <a wire:navigate href="">
+        <a wire:navigate href="{{ route('stopwatch') }}">
           <i class="fa-solid fa-stopwatch text-2xl"></i>
         </a>
         <a wire:navigate href="{{ route('notes') }}">
