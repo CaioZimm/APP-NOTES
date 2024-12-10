@@ -1,25 +1,24 @@
-<div>
-    @include('components.partials.navigation')
+<div class="h-full w-full flex justify-between items-center flex-col py-10 my-6">
+    <div>
+        <div wire:poll.990ms="count"></div>
+        <h1 class="text-8xl font-semibold"> {{ $formatted }}</h1>
+    </div>
 
-    <main class="flex justify-between items-center flex-col w-full h-[70vh] border border-red-500">
-        <div class="w-2/5 items-center flex justify-center gap-[14vh] mt-14 border border-green-500">
-            <button class="border border-black py-5 w-56 rounded-2xl font-semibold text-base hover:bg-slate-400 transition-all">
-                Temporizador
+    <div>
+        @if($run)
+        <div class="flex justify-normal items-start text-center mt-[11vh] gap-[8vh]">
+            <button wire:click="pause" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                <i class="fa-solid fa-pause text-xl"></i>
             </button>
 
-            <button class="border border-black py-5 w-56 rounded-2xl font-semibold text-base hover:bg-slate-400 transition-all">
-                Cronômetro
+            <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                <i class="fa-solid fa-rotate-left text-xl"></i>
             </button>
         </div>
-
-        <div>
-            <h1 class="text-8xl font-semibold border border-orange-600"> 05:00</h1>
-        </div>
-
-        <div>
-            <button class="bg-blue-600 p-10 rounded-full items-center justify-center text-center flex w-36 h-36 mt-10 border border-black">
+        @else
+            <button wire:click='start' class="bg-blue-600 p-10 rounded-full items-center justify-center text-center flex w-36 h-36 mt-10 border border-black">
                 <i class="fa-solid fa-play text-white text-5xl pl-3"></i>
             </button>
-        </div>
-    </main>
+        @endif
+    </div>
 </div>

@@ -15,9 +15,7 @@ class LiveTimer extends Component
 
     public function increment()
     {
-        $timeCurrent = Carbon::createFromFormat('H:i:s', $this->time);
-        $timeCurrent->addSecond();
-        $this->time = $timeCurrent->format('H:i:s');
+        $this->time = now()->format('H:i:s');
     }
 
     public function render()

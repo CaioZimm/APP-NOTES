@@ -4,11 +4,11 @@ namespace App\Livewire\StopWatch;
 
 use Livewire\Component;
 
-class Timer extends Component
+class StopWatch extends Component
 {
-    public $time = 300;
-    public $run = false;
-    public $pause = false;
+    public $time = 0;
+    public $isRun = false;
+    public $isPause = false;
     public $formatted;
 
     public function mount(){
@@ -16,30 +16,31 @@ class Timer extends Component
     }
     public function render()
     {
-        return view('livewire.stop-watch.timer');
+        return view('livewire.stop-watch.stop-watch');
     }
 
-    public function start(){
-        $this->run = true;
-        $this->pause = false;
+    public function play(){
+        $this->isRun = true;
+        $this->isPause = false;
         $this->count();
     }
+    
     public function count(){
-        if($this->run && $this->time > 0){
-            $this->time--;
+        if($this->isRun){
+            $this->time++;
             $this->formatted = $this->formatTime($this->time);
         }
     }
-
+    
     public function pause(){
-        $this->run = false;
+        $this->isRun = false;
     }
 
     public function restart(){
-        $this->time = 300;
+        $this->time = 0;
         $this->formatted = $this->formatTime($this->time);
-        $this->run = false;
-        $this->pause = false;
+        $this->isRun = false;
+        $this->isPause = false;
     }
 
     public function formatTime($time){

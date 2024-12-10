@@ -1,3 +1,3 @@
-<div wire:poll.1000ms="increment">
+<div wire:poll.400ms="increment">
     <h1 class="text-[15vh] font-semibold"> {{ $time }} </h1>
 </div>
