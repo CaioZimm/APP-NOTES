@@ -1,12 +1,12 @@
 <div class="h-full w-full flex justify-between items-center flex-col py-10 my-6">
     <div>
-        <div wire:poll.990ms='count'></div>
+        <div wire:poll.1000ms='count'></div>
         <h1 class="text-8xl font-semibold"> {{ $formatted }} </h1>
     </div>
 
-    <div>
+    <div class="w-full flex items-center justify-center">
         @if($isRun)
-            <div class="flex justify-normal items-start text-center mt-[11vh] gap-[8vh]">
+            <div class="w-full flex items-start justify-between mt-[11vh] px-2 gap-2 xs:justify-center xs:gap-40">
                 <button wire:click="pause" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
                     <i class="fa-solid fa-pause text-xl"></i>
                 </button>

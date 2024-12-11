@@ -15,6 +15,10 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
+        screens: {
+            'xs': '430px',
+            'sm': '640px',
+        },
     },
     plugins: [],
 };

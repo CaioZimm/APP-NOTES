@@ -1,20 +1,26 @@
 <div class="h-full w-full flex justify-between items-center flex-col py-10 my-6">
-    <div>
-        <div wire:poll.990ms="count"></div>
+    <div class="flex items-center flex-col">
+        <div wire:poll.1000ms="count"></div>
+
+        {{-- <div class="border border-green-500 flex items-center justify-center">
+            <input wire:model='time' type="number" placeholder="05:00" 
+            class="text-5xl font-semibold border-b-2 border-black outline-none w-44 text-center placeholder:text-gray-700">
+        </div> --}}
+
         <h1 class="text-8xl font-semibold"> {{ $formatted }}</h1>
     </div>
 
-    <div>
-        @if($run)
-        <div class="flex justify-normal items-start text-center mt-[11vh] gap-[8vh]">
-            <button wire:click="pause" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
-                <i class="fa-solid fa-pause text-xl"></i>
-            </button>
+    <div class="w-full flex items-center justify-center">
+        @if($isRun)
+            <div class="w-full flex items-start justify-between mt-[11vh] px-2 gap-2 xs:justify-center xs:gap-40">
+                <button wire:click="pause" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                    <i class="fa-solid fa-pause text-xl"></i>
+                </button>
 
-            <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
-                <i class="fa-solid fa-rotate-left text-xl"></i>
-            </button>
-        </div>
+                <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                    <i class="fa-solid fa-rotate-left text-xl"></i>
+                </button>
+            </div>
         @else
             <button wire:click='start' class="bg-blue-600 p-10 rounded-full items-center justify-center text-center flex w-36 h-36 mt-10 border border-black">
                 <i class="fa-solid fa-play text-white text-5xl pl-3"></i>

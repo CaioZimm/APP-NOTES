@@ -7,8 +7,8 @@ use Livewire\Component;
 class Timer extends Component
 {
     public $time = 300;
-    public $run = false;
-    public $pause = false;
+    public $isRun = false;
+    public $isPause = false;
     public $formatted;
 
     public function mount(){
@@ -20,26 +20,35 @@ class Timer extends Component
     }
 
     public function start(){
-        $this->run = true;
-        $this->pause = false;
-        $this->count();
+        if($this->time === null){
+            $this->time = 90;
+            $this->isRun = true;
+            $this->isPause = false;
+            $this->count();
+        }
+
+        else{
+            $this->isRun = true;
+            $this->isPause = false;
+            $this->count();
+        }
     }
     public function count(){
-        if($this->run && $this->time > 0){
+        if($this->isRun && $this->time > 0){
             $this->time--;
             $this->formatted = $this->formatTime($this->time);
         }
     }
 
     public function pause(){
-        $this->run = false;
+        $this->isRun = false;
     }
 
     public function restart(){
         $this->time = 300;
         $this->formatted = $this->formatTime($this->time);
-        $this->run = false;
-        $this->pause = false;
+        $this->isRun = false;
+        $this->isPause = false;
     }
 
     public function formatTime($time){
