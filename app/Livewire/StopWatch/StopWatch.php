@@ -34,6 +34,12 @@ class StopWatch extends Component
     
     public function pause(){
         $this->isRun = false;
+        $this->isPause = true;
+    }
+
+    public function return(){
+        $this->isRun = true;
+        $this->count();
     }
 
     public function restart(){

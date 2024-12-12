@@ -2,12 +2,10 @@
     <div class="flex items-center flex-col">
         <div wire:poll.1000ms="count"></div>
 
-        {{-- <div class="border border-green-500 flex items-center justify-center">
-            <input wire:model='time' type="number" placeholder="05:00" 
-            class="text-5xl font-semibold border-b-2 border-black outline-none w-44 text-center placeholder:text-gray-700">
-        </div> --}}
-
-        <h1 class="text-8xl font-semibold"> {{ $formatted }}</h1>
+        <div class="flex items-center justify-center">
+            <input wire:model.debounce.1000ms="formatted" placeholder="05:00" value="05:00" inputmode="numeric" required 
+            class="text-7xl font-semibold border-b-2 border-black outline-none w-72 text-center placeholder:text-gray-700" @disabled($isRun) />
+        </div>
     </div>
 
     <div class="w-full flex items-center justify-center">
@@ -15,6 +13,16 @@
             <div class="w-full flex items-start justify-between mt-[11vh] px-2 gap-2 xs:justify-center xs:gap-40">
                 <button wire:click="pause" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
                     <i class="fa-solid fa-pause text-xl"></i>
+                </button>
+
+                <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                    <i class="fa-solid fa-rotate-left text-xl"></i>
+                </button>
+            </div>
+        @elseif($isPause)
+            <div class="w-full flex items-start justify-between mt-[11vh] px-2 gap-2 xs:justify-center xs:gap-40">
+                <button wire:click="return" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                    <i class="fa-solid fa-play text-xl"></i>
                 </button>
 
                 <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">

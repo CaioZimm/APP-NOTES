@@ -15,6 +15,16 @@
                     <i class="fa-solid fa-rotate-left text-xl"></i>
                 </button>
             </div>
+        @elseif($isPause)
+            <div class="w-full flex items-start justify-between mt-[11vh] px-2 gap-2 xs:justify-center xs:gap-40">
+                <button wire:click="return" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                    <i class="fa-solid fa-play text-xl"></i>
+                </button>
+
+                <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
+                    <i class="fa-solid fa-rotate-left text-xl"></i>
+                </button>
+            </div>
         @else
             <button wire:click='play' class="bg-blue-600 p-10 rounded-full items-center justify-center text-center flex w-36 h-36 mt-10 border border-black">
                 <i class="fa-solid fa-play text-white text-5xl pl-3"></i>

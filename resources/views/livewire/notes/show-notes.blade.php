@@ -37,7 +37,7 @@
                     <div class="w-full flex items-center justify-end gap-2">
                         {{-- <livewire:notes.edit-notes wire:navigate href='/notes/{{ $note->id }}' /> --}}
 
-                        <button wire:navigate href='/notes/{{ $note->id }}' class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-900">
+                        <button wire:navigate href='/notes' class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-900">
                             Editar <i class="fa-solid fa-pen-to-square text-lg pl-1"></i>
                         </button>
 
