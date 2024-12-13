@@ -63,6 +63,9 @@ class Timer extends Component
             $this->time--;
             $this->formatted = $this->formatTime($this->time);
         }
+        elseif ($this->time <= 0) {
+            $this->isRun = false;
+        }
     }
 
     public function pause(){

@@ -1,5 +1,5 @@
 <div x-data="{ open: false }">
-    <button @click="open = true" class="mt-4 flex items-center justify-center bg-blue-500 border border-black w-[120px] h-[120px] rounded-full p-8 ease-in duration-300
+    <button @click="open = true" class="mt-10 flex items-center justify-center bg-blue-500 border border-black w-[120px] h-[120px] rounded-full p-8 ease-in duration-300
     hover:bg-slate-500"> 
       <p class="flex items-center justify-center font-bold text-center text-white text-7xl pb-4 ease-in duration-300 hover:text-black"> + </p>
     </button>
