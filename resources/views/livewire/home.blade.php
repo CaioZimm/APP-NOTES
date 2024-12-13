@@ -7,9 +7,7 @@
       
       <livewire:modal.create-notes />
 
-      <a wire:click='showNotes' href="{{ route('notes') }}" class="mt-[3rem] text-[20px] font-[sans-serif] underline"> 
-        Ver minhas anotações
-      </a>
+      <livewire:modal.show-notes />
 
       @if (session('message'))
         <div class="text-red-600">
