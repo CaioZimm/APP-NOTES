@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Timer extends Component
 {
-    public $time;
+    public $time = 300;
     public $isRun = false;
     public $isPause = false;
     public $formatted;

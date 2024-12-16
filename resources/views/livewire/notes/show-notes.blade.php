@@ -26,7 +26,11 @@
                     <div class="flex items-center flex-col">
                         <h6 class="font-semibold pb-2">Descrição</h6>
                         <p class="mb-10 font-normal text-gray-600 text-center break-words w-[22rem] line-clamp-6 text-ellipsis">
-                            {{ $note->description }}
+                            @if(empty($note->description))
+                                Sem descrição
+                            @else
+                                {{ $note->description }}
+                            @endif
                         </p>
                     </div>
 
@@ -35,9 +39,7 @@
                     </p>
                     
                     <div class="w-full flex items-center justify-end gap-2">
-                        {{-- <livewire:notes.edit-notes wire:navigate href='/notes/{{ $note->id }}' /> --}}
-
-                        <button wire:navigate href='/notes' class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-900">
+                        <button wire:navigate href='/notes/{{ $note->id }}' @click="open = true" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-900">
                             Editar <i class="fa-solid fa-pen-to-square text-lg pl-1"></i>
                         </button>
 
@@ -48,6 +50,11 @@
                 </div>
             @endforeach
         </div>
+            @if(session()->has('sucesso'))
+                <div class="text-green-700 font-bold bg-slate-400">
+                    {{ session('sucesso') }}
+                </div>
+            @endif
         @endif
     </main>
 </div>

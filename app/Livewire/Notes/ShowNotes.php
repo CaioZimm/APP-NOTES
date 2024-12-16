@@ -15,11 +15,6 @@ class ShowNotes extends Component
         $this->notes = Note::all()->where('user_id', Auth::user()->id);
     }
 
-    public function render()
-    {
-        return view('livewire.notes.show-notes');
-    }
-
     public function deleteNote(Note $note){
         $note->delete();
 
@@ -28,10 +23,14 @@ class ShowNotes extends Component
     }
     public function logout(Request $request){
         Auth::logout();
-
+        
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+        
         return $this->redirect('/', navigate:true);
+    }
+    public function render()
+    {
+        return view('livewire.notes.show-notes');
     }
 }
