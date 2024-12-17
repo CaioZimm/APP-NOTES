@@ -23,13 +23,27 @@ class EditNote extends Component
     }
 
     public function update(){
-        $validated=$this->validate([
+        $this->validate([
             'title' => ['required', 'string' ,'max:255'],
-            'description' => ['string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:255'],
             'date' => ['date', 'required']
         ]);
 
-        $this->note->update($validated);
+        $data = [];
+        if ($this->title && $this->title !== $this->note->title){
+            $data['title'] = $this->title;
+        }
+        if ($this->description && $this->description !== $this->note->description){
+            $data['description'] = $this->description;
+        }
+        if ($this->date && $this->date !== $this->note->date){
+            $data['date'] = $this->date;
+        }
+        if (empty($data)) {
+            return redirect('/notes');
+        }
+
+        $this->note->update($data);
 
         session()->flash('sucesso','Editado com sucesso!');
         return $this->redirect('/notes', navigate: true);

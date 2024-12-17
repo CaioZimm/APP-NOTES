@@ -23,7 +23,7 @@
                 <div class="flex flex-col items-start w-full">
                     <label class="text-xl items-center mt-2 font-semibold">Descrição</label>
                     <input wire:model='description' type="text" placeholder="Insira uma breve descrição"
-                    class="placeholder:font-normal placeholder:text-gray-700 placeholder:text-[18px] outline-none bg-transparent h-8 pl-1 mt-1 text-xl text-blue-950 border-b border-black w-[95%]">
+                    class="placeholder:font-normal placeholder:text-[18px] outline-none bg-transparent h-8 pl-1 mt-1 text-xl text-blue-950 border-b border-black w-[95%]">
                     <div>
                         @error('description')
                             <span class="text-red-600 text-sm">{{ $message }}</span> 
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="flex justify-start mt-7">
+                <div class="flex justify-start mt-3">
                     <button type="submit" class="bg-blue-500 text-white font-semibold w-44 px-4 py-2 rounded-lg hover:bg-blue-700">
                         Atualizar
                     </button>
