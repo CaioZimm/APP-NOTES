@@ -20,14 +20,14 @@ Route::get('/', Home::class)->name('home');
 Route::get('/register', Register::class)->name('register');;
 Route::get('/login', Login::class)->name('login');
 
+// ----------------- Page - StopWatch -------------------- //
+Route::get('/stopwatch', Main::class)->name('stopwatch');
+
 Route::middleware('auth')->group(function(){
     // ---------------- Profile - User ------------------- //
     Route::get('/profile', ProfileUser::class)->name('profile');
-    
+
     // ----------------- Page - Notes -------------------- //
     Route::get('/notes', ShowNotes::class)->name('notes');
     Route::get('/notes/{note}', EditNote::class)->name('notes-edit');
-
-    // ----------------- Page - StopWatch -------------------- //
-    Route::get('/stopwatch', Main::class)->name('stopwatch');
 });

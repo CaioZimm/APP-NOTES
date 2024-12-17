@@ -14,13 +14,7 @@ class ShowNotes extends Component
     public function mount(){
         $this->notes = Note::all()->where('user_id', Auth::user()->id);
     }
-
-    public function deleteNote(Note $note){
-        $note->delete();
-
-        session()->flash('sucesso','Excluído com sucesso!');
-        return $this->redirect('/notes', navigate: true);
-    }
+    
     public function logout(Request $request){
         Auth::logout();
         

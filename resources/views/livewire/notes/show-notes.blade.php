@@ -26,11 +26,7 @@
                     <div class="flex items-center flex-col">
                         <h6 class="font-semibold pb-2">Descrição</h6>
                         <p class="mb-10 font-normal text-gray-600 text-center break-words w-[22rem] line-clamp-6 text-ellipsis">
-                            @if(empty($note->description))
-                                Sem descrição
-                            @else
-                                {{ $note->description }}
-                            @endif
+                            {{ $note->description ?: 'Sem descrição' }}
                         </p>
                     </div>
 
@@ -42,10 +38,8 @@
                         <button wire:navigate href='/notes/{{ $note->id }}' @click="open = true" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-900">
                             Editar <i class="fa-solid fa-pen-to-square text-lg pl-1"></i>
                         </button>
-
-                        <button href="#" wire:click='deleteNote({{ $note->id }})' class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-900">
-                            Excluir <i class="fa-solid fa-trash text-lg pl-1"></i>
-                        </button>
+                        
+                        <livewire:notes.delete-note :id="$note->id" />
                     </div>
                 </div>
             @endforeach
