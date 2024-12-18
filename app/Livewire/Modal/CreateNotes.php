@@ -6,6 +6,7 @@ use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class CreateNotes extends Component
 {
@@ -29,8 +30,8 @@ class CreateNotes extends Component
             'description' => $this->description,
             'date' => $this->date,
         ]);
-
-        $message = "Anotação criada com sucesso!";
-        return Redirect::to('/')->with('message', $message);
+        
+        Toaster::success('Anotação criada com sucesso!');
+        return Redirect::to('/');
     }
 }

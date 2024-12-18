@@ -9,10 +9,6 @@
 
       <livewire:modal.show-notes />
 
-      @if (session('message'))
-        <div class="text-red-600">
-            {{ session('message') }}
-        </div>
-      @endif
+      <x-toaster-hub />
     </main>
 </div>

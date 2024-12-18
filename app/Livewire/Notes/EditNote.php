@@ -4,6 +4,8 @@ namespace App\Livewire\Notes;
 
 use App\Models\Note;
 use Livewire\Component;
+use Illuminate\Support\Facades\Redirect;
+use Masmerise\Toaster\Toaster;
 
 class EditNote extends Component
 {
@@ -45,7 +47,7 @@ class EditNote extends Component
 
         $this->note->update($data);
 
-        session()->flash('sucesso','Editado com sucesso!');
-        return $this->redirect('/notes', navigate: true);
+        Toaster::success('Anotação atualizada com sucesso!');
+        return Redirect::to('/notes');
     }
 }

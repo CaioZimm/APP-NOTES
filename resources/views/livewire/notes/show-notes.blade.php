@@ -44,11 +44,9 @@
                 </div>
             @endforeach
         </div>
-            @if(session()->has('sucesso'))
-                <div class="text-green-700 font-bold bg-slate-400">
-                    {{ session('sucesso') }}
-                </div>
-            @endif
+
+        <x-toaster-hub />
+
         @endif
     </main>
 </div>

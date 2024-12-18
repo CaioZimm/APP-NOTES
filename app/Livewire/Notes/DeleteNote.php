@@ -4,6 +4,8 @@ namespace App\Livewire\Notes;
 
 use App\Models\Note;
 use Livewire\Component;
+use Illuminate\Support\Facades\Redirect;
+use Masmerise\Toaster\Toaster;
 
 class DeleteNote extends Component
 {
@@ -20,8 +22,8 @@ class DeleteNote extends Component
         if ($note){
             $note->delete();
 
-            session()->flash('sucesso', 'Anotação excluída!');
-            return $this->redirect('/notes');
+            Toaster::success('Anotação excluída com sucesso!');
+            return Redirect::to('/notes');
         }
     }
 
