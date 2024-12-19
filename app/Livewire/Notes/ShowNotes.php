@@ -9,10 +9,37 @@ use Livewire\Component;
 
 class ShowNotes extends Component
 {
+    public $orderBy = '';
     public $notes = [];
-
+    protected $listeners = ['orderByUpdated'];
+    
     public function mount(){
-        $this->notes = Note::all()->where('user_id', Auth::user()->id);
+        $this->showNotes();
+    }
+
+    public function orderByUpdated($value){
+        $this->orderBy = $value;
+        $this->showNotes();
+    }
+
+    public function showNotes(){
+        $query = Note::query()->where('user_id', Auth::user()->id);
+
+        switch($this->orderBy) {
+            case 'alphabetical':
+                $query->orderBy('title', 'asc');
+                break;
+            case 'newest':
+                $query->orderBy('date', 'desc');
+                break;
+            case 'oldest':
+                $query->orderBy('date', 'asc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+        }
+
+        $this->notes = $query->get();
     }
     
     public function logout(Request $request){
@@ -25,6 +52,6 @@ class ShowNotes extends Component
     }
     public function render()
     {
-        return view('livewire.notes.show-notes');
+        return view('livewire.notes.show-notes', ['notes' => $this->notes,]);
     }
 }

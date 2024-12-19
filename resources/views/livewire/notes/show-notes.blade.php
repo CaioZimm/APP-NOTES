@@ -4,12 +4,7 @@
     <main class="w-full h-full">
         <h1 class="text-center font-bold text-4xl mt-8">Minhas anotações</h1>
 
-        <div class="flex justify-start items-center ml-5 mt-8 cursor-pointer">
-            <button class="flex">
-                <i class="fa-solid fa-filter text-2xl"></i>
-                <p class="text-xl ml-3"> Ordenar por: </p>
-            </button>
-        </div>
+        <livewire:notes.order-by />
 
         @if($notes->isEmpty())
             <p class="text-center text-xl text-gray-600 mt-12">Você não tem nenhuma anotação</p>
