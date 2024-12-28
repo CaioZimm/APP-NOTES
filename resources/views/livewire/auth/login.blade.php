@@ -1,6 +1,6 @@
 <div>
     <main class="w-full h-screen flex items-center justify-center">
-        <form wire:submit='login' class="bg-slate-300 flex items-center justify-start flex-col border border-black w-[30rem] h-[33rem] p-4 rounded-md shadow-md shadow-slate-600">
+        <form wire:submit='login' class="bg-slate-300 flex items-center justify-start flex-col border border-black w-[30rem] h-[33rem] p-4 rounded-md shadow-md shadow-slate-600 mx-2">
             <h1 class="text-4xl font-bold mb-[20px] mt-4">Login</h1>
 
             <label class="w-[90%] text-xl items-center mt-5">Email</label>
@@ -16,7 +16,7 @@
                 @enderror
             </div>
 
-            <p class="mt-4 w-[90%]"> Esqueceu a senha? <a wire:navigate href="" class="text-blue-700 underline"> Clique aqui</a> </p>
+            <p class="mt-4 w-[90%]"> Esqueceu a senha? <a wire:navigate href="{{ route('reset-password') }}" class="text-blue-700 underline"> Clique aqui</a> </p>
 
             <button type="submit" class="hover:bg-gray-400 hover:text-black
             mt-16 border border-black w-[90%] h-14 rounded-lg font-bold text-xl text-white bg-slate-800 transition">
@@ -27,5 +27,7 @@
                 <a href="{{ route('register') }}" class="text-blue-700 underline"> Registrar aqui </a> 
             </p>
         </form>
+
+        <x-toaster-hub />
     </main>
 </div>
