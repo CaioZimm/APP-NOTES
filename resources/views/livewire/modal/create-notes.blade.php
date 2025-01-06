@@ -39,7 +39,7 @@
     <div x-show="open" x-transition>
       <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-55">
         
-        <div class="border border-black bg-slate-200 h-[35rem] w-[45rem] flex items-center justify-between flex-col rounded-lg">
+        <div class="border border-black bg-slate-200 h-[35rem] w-[45rem] flex items-center justify-between flex-col rounded-lg mx-2">
             <div class="flex justify-end w-full">
                 <button @click="open = false" class="mr-2">
                     <i class="fa-solid fa-xmark text-3xl"></i>
@@ -71,7 +71,7 @@
                     <div class="flex flex-col items-start w-full pl-6 mt-4">
                         <label class="text-xl items-center mt-2 font-semibold">Data</label>
                         <input wire:model='date' type="date" placeholder="" 
-                        class="placeholder:font-normal placeholder:text-[18px] outline-none bg-transparent h-8 text-xl text-blue-950 border-b border-black w-[32%]">
+                        class="placeholder:font-normal placeholder:text-[18px] outline-none bg-transparent h-8 text-xl text-blue-950 border-b border-black w-[14rem]">
                         @error('date')
                             <span class="text-red-600">{{ $message }}</span>
                         @enderror

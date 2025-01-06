@@ -1,6 +1,6 @@
 <div x-data="{ open: true }">
     <div x-show="open" x-transition class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-55">
-        <div class="bg-white rounded-lg shadow-lg w-[40rem] h-[25rem] p-6">
+        <div class="bg-white rounded-lg shadow-lg w-[40rem] h-[25rem] p-6 mx-2">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">Editar Anotação</h2>
                 <button @click="open = false" href='/notes' wire:navigate class="text-2xl text-gray-600 hover:text-gray-900">
@@ -34,7 +34,7 @@
                 <div class="flex flex-col items-start w-full">
                     <label class="text-xl items-center mt-2 font-semibold">Data</label>
                     <input wire:model='date' type="date" placeholder="{{ $note->date }}"
-                    class="placeholder:font-normal placeholder:text-gray-700 placeholder:text-[18px] outline-none bg-transparent h-8 pl-1 mt-1 text-xl text-blue-950 border-b border-black w-[30%]">
+                    class="placeholder:font-normal placeholder:text-gray-700 placeholder:text-[18px] outline-none bg-transparent h-8 pl-1 mt-1 text-xl text-blue-950 border-b border-black w-44">
                     <div>
                         @error('date')
                             <span class="text-red-600 text-sm">{{ $message }}</span> 

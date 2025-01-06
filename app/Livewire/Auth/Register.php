@@ -4,7 +4,9 @@ namespace App\Livewire\Auth;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Register extends Component
 {
@@ -33,6 +35,7 @@ class Register extends Component
 
         Auth::login($user);
 
-        return $this->redirect('/', navigate: true);
+        Toaster::success('Usuário registrado com sucesso!');
+        return Redirect::to('/');
     }
 }

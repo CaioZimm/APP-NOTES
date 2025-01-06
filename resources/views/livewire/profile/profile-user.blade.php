@@ -58,7 +58,7 @@
           <div class="flex flex-col justify-start mt-4">
             <label class="font-medium text-lg"> Senha atual </label>
             <input wire:model='password' type="password" placeholder="Digite sua senha atual"
-            class="border border-black w-[48%] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-lg placeholder:text-gray-500">
+            class="border border-black xs:w-[48%] w-[13rem] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-base placeholder:text-gray-500">
             @error('password')
               <span class="text-red-600">{{ $message }}</span>
             @enderror
@@ -67,13 +67,13 @@
           <div class="flex flex-col justify-start mt-4">
             <label class="font-medium text-lg"> Nova senha </label>
             <input wire:model='new_password' type="password" placeholder="Digite sua nova senha"
-            class="border border-black w-[48%] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-lg placeholder:text-gray-500">
+            class="border border-black xs:w-[48%] w-[13rem] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-base placeholder:text-gray-500">
           </div>
 
           <div class="flex flex-col justify-start mt-4">
             <label class="font-medium text-lg"> Confirmar senha </label>
             <input wire:model='new_password_confirmation' type="password" placeholder="Confirme sua nova senha"
-            class="border border-black w-[48%] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-lg placeholder:text-gray-500">
+            class="border border-black xs:w-[48%] w-[13rem] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-base placeholder:text-gray-500">
             @error('new_password')
               <span class="text-red-600">{{ $message }}</span>
             @enderror
@@ -111,5 +111,7 @@
         Excluir 
       </button>
     </div>
+
+    <x-toaster-hub />
   </main>
 </div>

@@ -44,10 +44,10 @@ class ShowNotes extends Component
     
     public function logout(Request $request){
         Auth::logout();
-        
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         return $this->redirect('/', navigate:true);
     }
     public function render()

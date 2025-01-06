@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class ProfileUser extends Component
 {
@@ -53,8 +54,8 @@ class ProfileUser extends Component
 
         $this->user->update($data);
 
-        session()->flash('sucessPersonal', 'Informações atualizadas com sucesso!');
-        return $this->redirect('/profile', navigate: true);
+        Toaster::success('Informações atualizadas com sucesso!');
+        return redirect()->to('/profile');
     }
 
     public function updatePassword(){
@@ -83,8 +84,8 @@ class ProfileUser extends Component
 
     public function delete(User $user){
         $user->delete();
-        session()->flash('sucesso', 'Usuário excluído com sucesso!');
 
-        return $this->redirect('/', navigate:true);
+        Toaster::success('Usuário excluído com sucesso!');
+        return redirect()->to('/');
     }
 }
