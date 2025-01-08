@@ -39,16 +39,7 @@
         </form>
       </div>
 
-      <div class="flex items-center justify-center w-[40%] flex-col">
-        <div class="relative">
-          <img src="https://uploads.jovemnerd.com.br/wp-content/uploads/2021/12/pingu-episodio-dublado-fa-resultado-hilario.jpg" alt="Foto de Perfil" class="w-36 h-36 rounded-full border-2 border-black object-cover">
-
-          <button type="button" class="absolute bottom-0 right-0 transform translate-y-1/2 bg-gray-300 border border-black text-base px-2 py-1 rounded-md shadow-sm">
-            <i class="fa-solid fa-pen"></i> Editar
-          </button>
-        </div>
-      </div>
-
+      <livewire:profile.upload-photo />
     </div>
 
     <div class="w-[80%] mt-8">
