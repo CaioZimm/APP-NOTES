@@ -15,6 +15,13 @@ class UploadPhoto extends Component
     public $photo;
     public $user;
 
+    public bool $dropdownOpen = false;
+
+    public function dropdown()
+    {
+        $this->dropdownOpen = !$this->dropdownOpen;
+    }
+
     public function mount(){
         $this->user = Auth::user();
     }
@@ -26,12 +33,16 @@ class UploadPhoto extends Component
 
     public function uploadPhoto(){
         $this->validate([
-            'photo' => ['required', 'image', 'max:1024']
+            'photo' => ['required', 'image', 'max:10240']
         ]);
 
         $user = auth()->user();
 
-        $nameFile = Str::slug($user->name) . '.' . $this->photo->getClientOriginalExtension();
+        if ($user->photo && Storage::exists($user->photo)){
+            Storage::delete($user->photo);
+        }
+
+        $nameFile = Str::slug($user->name) . '-' . time() . '.' . $this->photo->getClientOriginalExtension();
 
         if($path = $this->photo->storeAs('images', $nameFile)){
             $user->update([

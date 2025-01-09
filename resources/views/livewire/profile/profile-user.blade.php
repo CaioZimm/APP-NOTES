@@ -21,7 +21,7 @@
             <div class="flex flex-col justify-start mt-4">
               <label class="font-medium text-lg"> Email </label>
               <input wire:model="email" type="text" placeholder="{{ $user->email }}" 
-              class="border border-black w-[80%] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-xl placeholder:text-gray-500">
+              class="border border-black w-[80%] rounded-md h-8 outline-none p-1 font-normal text-lg placeholder:text-sm xs:placeholder:text-xl placeholder:text-gray-500">
               @error('email')
                 <span class="text-red-600">{{ $message }}</span>
               @enderror
