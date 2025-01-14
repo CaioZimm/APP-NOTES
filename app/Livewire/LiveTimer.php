@@ -2,20 +2,20 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class LiveTimer extends Component
 {
-    public $time;
+    public $timezone, $currentTime;
 
     public function mount(){
-        $this->time = now()->format('H:i:s');
+        $this->timezone = Auth::user()->timezone ?? 'America/Sao_Paulo';
+        $this->update();
     }
 
-    public function increment()
-    {
-        $this->time = now()->format('H:i:s');
+    public function update(){
+        $this->currentTime = now()->setTimezone($this->timezone)->format('H:i:s');
     }
 
     public function render()

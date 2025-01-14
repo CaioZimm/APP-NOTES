@@ -94,7 +94,30 @@
       </form>
     </div>
 
-    <div class="w-[80%] mt-6 mb-4">
+    <div class="w-[80%] mt-8">
+      <h2 class="font-semibold text-xl underline">Modificar horário</h2>
+
+        <label class="block mb-2 text-base text-gray-900 mt-4">Altere o fuso horário de seu relógio aqui</label>
+        <select wire:model.live="timezone" class="text-base outline-none w-48 px-1 cursor-pointer border-b border-black">
+          <option value="America/Los_Angeles">Los Angeles</option>
+          <option value="America/New_York">Nova Iorque</option>
+          <option value="America/Mexico_City">Cidade do México</option>
+          <option value="America/Sao_Paulo">Brasília</option>
+          <option value="Europe/London">Londres</option>
+          <option value="Europe/Paris">Paris</option>
+          <option value="Africa/Lagos">Lagos</option>
+          <option value="Africa/Cairo">Cairo</option>
+          <option value="Europe/Moscow">Moscou</option>
+          <option value="Asia/Dubai">Dubai</option>
+          <option value="Asia/Hong_Kong">Hong Kong</option>
+          <option value="Asia/Bangkok">Bangkok</option>
+          <option value="Asia/Singapore">Singapura</option>
+          <option value="Asia/Tokyo">Tóquio</option>
+          <option value="Australia/Sydney">Sydney</option>
+        </select>
+    </div>
+
+    <div class="w-[80%] mt-8 mb-4">
       <h2 class="font-semibold text-xl underline"> Deletar conta </h2>
       <p class="text-base mt-1">Uma vez que sua conta é deletada, todos os seus dados serão permanentemente deletados também.</p>
 

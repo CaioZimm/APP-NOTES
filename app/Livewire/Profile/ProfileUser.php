@@ -17,8 +17,11 @@ class ProfileUser extends Component
 
     public $password, $new_password, $new_password_confirmation;
 
+    public $timezone;
+
     public function mount(){
         $this->user = Auth::user();
+        $this->timezone = $this->user->timezone;
     }
 
     public function render()
@@ -80,6 +83,15 @@ class ProfileUser extends Component
 
         session()->flash('successPassword', 'Senha atualizada com sucesso!');
         return $this->redirect('/profile', navigate: true);
+    }
+
+    public function updatedTimezone()
+    {
+        $this->user->timezone = $this->timezone;
+        $this->user->save();
+
+        Toaster::success('Fuso horário atualizado com sucesso!');
+        return redirect()->to('/profile');
     }
 
     public function delete(User $user){
