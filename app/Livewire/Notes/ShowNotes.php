@@ -5,7 +5,9 @@ namespace App\Livewire\Notes;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class ShowNotes extends Component
 {
@@ -40,6 +42,17 @@ class ShowNotes extends Component
         }
 
         $this->notes = $query->get();
+    }
+
+    public function deleteNote($id){
+        $note = Note::find($id);
+
+        if ($note){
+            $note->delete();
+
+            Toaster::success('Anotação excluída com sucesso!');
+            return Redirect::to('/notes');
+        }
     }
     
     public function logout(Request $request){

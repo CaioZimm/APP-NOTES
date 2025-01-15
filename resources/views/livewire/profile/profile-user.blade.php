@@ -85,19 +85,13 @@
           <button type="submit" class="mt-6 border border-black p-2 rounded-lg w-[13rem] bg-blue-600 font-bold text-yellow-50 transition hover:bg-blue-950">
             Atualizar 
           </button>
-
-          @if (session()->has('successPassword'))
-            <div class="text-green-600 font-bold mt-4">
-                {{ session('successPassword') }}
-            </div>
-          @endif
       </form>
     </div>
 
     <div class="w-[80%] mt-8">
       <h2 class="font-semibold text-xl underline">Modificar horário</h2>
 
-        <label class="block mb-2 text-base text-gray-900 mt-4">Altere o fuso horário de seu relógio aqui</label>
+        <label class="block mb-2 text-base mt-4">Altere o fuso horário de seu relógio aqui</label>
         <select wire:model.live="timezone" class="text-base outline-none w-48 px-1 cursor-pointer border-b border-black">
           <option value="America/Los_Angeles">Los Angeles</option>
           <option value="America/New_York">Nova Iorque</option>

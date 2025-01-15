@@ -81,8 +81,8 @@ class ProfileUser extends Component
             'password' => bcrypt($this->new_password),
         ]);
 
-        session()->flash('successPassword', 'Senha atualizada com sucesso!');
-        return $this->redirect('/profile', navigate: true);
+        Toaster::success('Senha atualizada com sucesso!');
+        return redirect()->to('/profile');
     }
 
     public function updatedTimezone()
