@@ -1,6 +1,8 @@
 <div class="h-full w-full flex justify-between items-center flex-col py-10 my-6">
     <div>
-        <div wire:poll.1000ms='count'></div>
+        @if ($isRun)
+            <div wire:poll.1000ms='count'></div>
+        @endif
         <h1 class="text-8xl font-semibold"> {{ $formatted }} </h1>
     </div>
 

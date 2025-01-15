@@ -1,7 +1,9 @@
 <div class="h-full w-full flex justify-between items-center flex-col py-10 my-6">
     <div class="flex items-center flex-col">
-        <div wire:poll.1000ms="count"></div>
-
+        @if ($isRun)
+            <div wire:poll.1000ms="count"></div>
+        @endif
+        
         <div class="flex items-center justify-center">
             <input wire:model.debounce.800ms="formatted" placeholder="05:00" value="05:00" inputmode="numeric" required 
             class="text-7xl bg-transparent font-semibold border-b-2 border-black outline-none w-72 text-center placeholder:text-gray-700" @disabled($isRun) />
