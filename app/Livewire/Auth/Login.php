@@ -4,11 +4,13 @@ namespace App\Livewire\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Login extends Component
 {
-    public $email, $password;
+    public $email, $password, $remember;
 
     public function render()
     {
@@ -16,17 +18,18 @@ class Login extends Component
     }
 
     public function login(Request $request){
-            $validated = $this->validate([
+            $this->validate([
                 'email' => ['required', 'email'],
                 'password' => ['required', 'max:16', 'min:4'],
             ]);
 
-            if(Auth::attempt($validated)){
+            if(Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
                 $request->session()->regenerate();
 
                 return $this->redirect('/', navigate:true);
             }
 
-        $this->addError('erro', 'Suas credenciais estão incorretas.');
+        Toaster::error('Suas credenciais estão incorretas.');
+        return Redirect::to('/login');
     }
 }

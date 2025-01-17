@@ -6,20 +6,27 @@
             <label class="w-[90%] text-xl items-center mt-5">Email</label>
             <input wire:model='email' type="email" placeholder="Digite seu email" class="placeholder:text-gray-500 placeholder:font-light placeholder:text-[16px]
             w-[90%] h-10 bg-transparent text-blue-950 text-2xl outline-none border-b border-black">
+            @error('email')
+                <span class="text-red-600">{{ $message }}</span>
+            @enderror
 
             <label class="w-[90%] text-xl items-center mt-7">Senha</label>
             <input wire:model='password' type="password" placeholder="Digite sua senha" class="placeholder:text-gray-500 placeholder:font-light placeholder:text-[16px]
             w-[90%] h-10 bg-transparent text-xl outline-none text-blue-950 border-b border-black">
-            <div>
-                @error('erro')
-                    <span class="text-red-600 font-bold mt-4">{{ $message }}</span>
-                @enderror
+            @error('password')
+                <span class="text-red-600">{{ $message }}</span>
+            @enderror
+
+            <div class="flex items-center justify-start w-[90%] mt-2">
+                <input type="checkbox" wire:model='remember' class="w-4 h-4 mr-1 hover:cursor-pointer"> 
+                    <p class="text-gray-950"> Lembrar-me </p> 
+                </input>
             </div>
 
-            <p class="mt-4 w-[90%]"> Esqueceu a senha? <a wire:navigate href="{{ route('reset-password') }}" class="text-blue-700 underline"> Clique aqui</a> </p>
+            <p class="mt-2 w-[90%]"> Esqueceu a senha? <a wire:navigate href="{{ route('reset-password') }}" class="text-blue-700 underline"> Clique aqui</a> </p>
 
             <button type="submit" class="hover:bg-gray-400 hover:text-black
-            mt-16 border border-black w-[90%] h-14 rounded-lg font-bold text-xl text-white bg-slate-800 transition">
+            mt-14 border border-black w-[90%] h-14 rounded-lg font-bold text-xl text-white bg-slate-800 transition">
                 Entrar 
             </button>
 

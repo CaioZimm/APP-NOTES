@@ -22,7 +22,7 @@ class ConfirmationNewPassword extends Component
     public function resetNewPassword(){
         $this->validate([
             'token' => ['required', 'max:6', 'min:6'],
-            'newpassword' => ['required', 'string', 'confirmed'],
+            'newpassword' => ['required', 'string', 'confirmed', 'max:16', 'min:4'],
         ]);
 
         $verify = DB::table('password_reset_tokens')->where('token', $this->token)->first();
