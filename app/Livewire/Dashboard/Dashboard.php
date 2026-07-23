@@ -22,7 +22,7 @@ class Dashboard extends Component
         $favoriteNotes = Note::where('user_id', $user->id)->where('is_favorite', true)->count();
         $tagsData = $user->tags()->withCount('notes')->orderByDesc('notes_count')->take(5)->get();
 
-        return view('livewire.dashboard.dashboard', [
+        return view('livewire.dashboard.index', [
             'totalNotes' => $totalNotes,
             'notesThisWeek' => $notesThisWeek,
             'favoriteNotes' => $favoriteNotes,
