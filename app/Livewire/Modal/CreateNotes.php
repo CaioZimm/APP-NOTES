@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Modal;
 
-use App\Models\Note;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 use Masmerise\Toaster\Toaster;
+use Livewire\Component;
+use App\Models\Note;
 
 class CreateNotes extends Component
 {

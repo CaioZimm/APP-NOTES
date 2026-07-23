@@ -12,9 +12,7 @@ use Masmerise\Toaster\Toaster;
 class UploadPhoto extends Component
 {
     use WithFileUploads;
-    public $photo;
-    public $user;
-
+    public $user, $photo;
     public bool $dropdownOpen = false;
 
     public function dropdown()
@@ -48,10 +46,13 @@ class UploadPhoto extends Component
             $user->update([
                 'photo' => $path
             ]);
+            $this->user = $user;
         }
 
+        $this->dropdownOpen = false;
+        $this->photo = null;
+
         Toaster::success('Foto de perfil atualizada com sucesso!');
-        return redirect()->to('/profile');
     }
 
     public function removePhoto(){
@@ -62,7 +63,8 @@ class UploadPhoto extends Component
             $this->user->save();
         }
 
+        $this->dropdownOpen = false;
+
         Toaster::success('Foto de perfil removida com sucesso!');
-        return redirect()->to('/profile');
     }
 }

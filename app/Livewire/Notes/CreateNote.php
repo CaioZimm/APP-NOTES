@@ -3,32 +3,24 @@
 namespace App\Livewire\Notes;
 
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Masmerise\Toaster\Toaster;
 use Livewire\Component;
 use App\Models\Note;
 
-class EditNote extends Component
+class CreateNote extends Component
 {
-    public $note;
-    public $title;
-    public $description;
+    public $title = '';
+    public $description = '';
     public $date;
     public $selectedTags = [];
 
-    public function mount(Note $note)
+    public function mount()
     {
-        Gate::authorize('update', $note);
-
-        $this->note = $note;
-        $this->title = $note->title;
-        $this->description = $note->description;
-        $this->date = $note->date;
-        $this->selectedTags = $note->tags()->pluck('tags.id')->toArray();
+        $this->date = now()->format('Y-m-d');
     }
 
-    public function update()
+    public function save()
     {
         $this->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -36,15 +28,18 @@ class EditNote extends Component
             'date' => ['date', 'required']
         ]);
 
-        $this->note->update([
+        $note = Note::create([
+            'user_id' => Auth::id(),
             'title' => $this->title,
             'description' => $this->description,
             'date' => $this->date,
         ]);
 
-        $this->note->tags()->sync($this->selectedTags);
+        if (!empty($this->selectedTags)) {
+            $note->tags()->sync($this->selectedTags);
+        }
 
-        Toaster::success('Anotação atualizada com sucesso!');
+        Toaster::success('Anotação criada com sucesso!');
         return Redirect::to('/notes');
     }
 
@@ -52,7 +47,7 @@ class EditNote extends Component
     {
         $userTags = Auth::user()->tags()->orderBy('name')->get();
 
-        return view('livewire.notes.edit-note', [
+        return view('livewire.notes.create-note', [
             'availableTags' => $userTags
         ]);
     }

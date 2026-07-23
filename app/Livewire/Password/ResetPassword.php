@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Password;
 
-use App\Mail\ForgotPassword;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
-use Livewire\Component;
+use App\Services\PasswordResetService;
+use Illuminate\Support\Facades\Mail;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Http\Request;
+use App\Mail\ForgotPassword;
+use Livewire\Component;
+use App\Models\User;
 
 class ResetPassword extends Component
 {
@@ -31,7 +32,11 @@ class ResetPassword extends Component
             return Redirect::to('/reset-password');
         }
 
-        Mail::to($user)->send(new ForgotPassword($user));
+        $token = (new PasswordResetService())->createToken($user->email);
+        
+        session()->put('reset_email', $user->email);
+
+        Mail::to($user)->send(new ForgotPassword($token));
 
         Toaster::success('Código enviado para o email informado.');
         return redirect()->to('/new-password');

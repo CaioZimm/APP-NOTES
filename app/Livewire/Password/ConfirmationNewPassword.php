@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Password;
 
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
-use Livewire\Component;
+use App\Services\PasswordResetService;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Masmerise\Toaster\Toaster;
+use Livewire\Component;
+use App\Models\User;
 
 class ConfirmationNewPassword extends Component
 {
@@ -25,14 +26,20 @@ class ConfirmationNewPassword extends Component
             'newpassword' => ['required', 'string', 'confirmed', 'max:16', 'min:4'],
         ]);
 
-        $verify = DB::table('password_reset_tokens')->where('token', $this->token)->first();
+        $email = session('reset_email');
+        if (!$email) {
+            Toaster::error('Sessão expirada. Tente novamente.');
+            return Redirect::to('/reset-password');
+        }
 
-        if (!$verify) {
+        $service = new PasswordResetService();
+        
+        if (!$service->isValidToken($email, $this->token)) {
             Toaster::error('Token inválido ou expirado.');
             return Redirect::to('/new-password');
         }
 
-        $user = User::where('email', $verify->email)->first();
+        $user = User::where('email', $email)->first();
 
         if (Hash::check($this->newpassword, $user->password)) {
             Toaster::error('A nova senha deve ser diferente da senha atual.');
@@ -40,10 +47,11 @@ class ConfirmationNewPassword extends Component
         }
 
         $user->update([
-            'password' => bcrypt($this->newpassword),
+            'password' => $this->newpassword,
         ]);
         
         DB::table('password_reset_tokens')->where('email', $user->email)->delete();
+        session()->forget('reset_email');
 
         Toaster::success('Senha redefinida com sucesso!');
         return Redirect::to('/login');

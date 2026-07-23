@@ -2,22 +2,19 @@
 
 namespace App\Livewire\Profile;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Livewire\Component;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Http\Request;
+use App\Traits\HasLogout;
+use Livewire\Component;
+use App\Models\User;
 
 class ProfileUser extends Component
 {
-    public $user;
-
-    public $name, $email;
-
+    use HasLogout;
+    public $user, $name, $email, $timezone;
     public $password, $new_password, $new_password_confirmation;
-
-    public $timezone;
 
     public function mount(){
         $this->user = Auth::user();
@@ -29,15 +26,6 @@ class ProfileUser extends Component
         return view('livewire.profile.profile-user');
     }
 
-    public function logout(Request $request){
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return $this->redirect('/', navigate:true);
-    }
-    
     public function update(){
         $this->validate([
             'name' => ['nullable', 'string', 'max:255'],
@@ -56,9 +44,10 @@ class ProfileUser extends Component
         }
 
         $this->user->update($data);
+        $this->user->refresh();
 
+        $this->reset(['name', 'email']);
         Toaster::success('Informações atualizadas com sucesso!');
-        return redirect()->to('/profile');
     }
 
     public function updatePassword(){
@@ -78,11 +67,11 @@ class ProfileUser extends Component
         }
 
         $this->user->update([
-            'password' => bcrypt($this->new_password),
+            'password' => $this->new_password,
         ]);
 
+        $this->reset(['password', 'new_password', 'new_password_confirmation']);
         Toaster::success('Senha atualizada com sucesso!');
-        return redirect()->to('/profile');
     }
 
     public function updatedTimezone()
@@ -91,11 +80,15 @@ class ProfileUser extends Component
         $this->user->save();
 
         Toaster::success('Fuso horário atualizado com sucesso!');
-        return redirect()->to('/profile');
     }
 
-    public function delete(User $user){
-        $user->delete();
+    public function delete(){
+        $user = Auth::user();
+        
+        if ($user) {
+            Auth::logout();
+            $user->delete();
+        }
 
         Toaster::success('Usuário excluído com sucesso!');
         return redirect()->to('/');

@@ -2,31 +2,26 @@
 
 namespace App\Livewire\StopWatch;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Traits\HasLogout;
 use Livewire\Component;
 
 class Main extends Component
 {
+    use HasLogout;
     public $screen = 'timer';
 
     public function timer(){
-        $this->screen = $this->screen === 'timer' ? 'timer' : 'timer';
+        $this->screen = 'timer';
     }
+
     public function stopwatch(){
-        $this->screen = $this->screen === 'stopwatch' ? 'stopwatch' : 'stopwatch';
+        $this->screen = 'stopwatch';
     }
+
     public function render()
     {
         return view('livewire.stop-watch.main');
-    }
-
-    public function logout(Request $request){
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return $this->redirect('/', navigate:true);
     }
 }
