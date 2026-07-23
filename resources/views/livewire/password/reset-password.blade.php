@@ -1,33 +1,31 @@
 <div>
-    <main class="w-full h-screen flex items-center justify-center">
-        <form wire:submit='resetPassword' class="bg-slate-300 mx-2 flex items-center justify-start flex-col border border-black w-[30rem] h-[28rem] p-4 rounded-md shadow-md shadow-slate-600">
-            <h1 class="text-4xl font-bold mb-[20px] mt-4">Redefinir Senha</h1>
+<div class="w-full min-h-screen flex items-center justify-center bg-gray-50 dark:bg-zinc-900 transition-colors duration-300 py-10">
+    <main class="w-full max-w-md px-6 py-8 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-none mx-4">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Redefinir Senha</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Insira o seu e-mail e enviaremos um código de acesso.</p>
+        </div>
 
-            <div class="flex flex-col items-start w-full pl-6">
-                <label class="w-[90%] text-base text-center">Insira o seu email e enviaremos um código para você voltar a acessar a sua conta.</label>
-            </div>
-
-            <div class="flex flex-col items-start w-full pl-6 mb-4 xs:mb-20">
-                <label class="text-xl items-center mt-5"> Email</label>
-                <input wire:model='email' type="email" placeholder="Digite seu email"
-                class="placeholder:text-gray-500 placeholder:font-light placeholder:text-[16px]
-                w-[90%] h-10 bg-transparent text-blue-950 text-2xl outline-none border-b border-black">
+        <form wire:submit='resetPassword' class="space-y-6">
+            <div>
+                <x-ui.label for="email" class="mb-1">E-mail</x-ui.label>
+                <x-ui.input wire:model='email' id="email" type="email" placeholder="nome@gmail.com" :error="$errors->has('email')" required autofocus />
                 @error('email')
-                    <span class="text-red-600">{{ $message }}</span>
+                    <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
                 @enderror
             </div>
-            
-            <button type="submit" class="hover:bg-gray-400 hover:text-black
-            border border-black w-[90%] h-14 rounded-lg font-bold text-xl text-white bg-slate-800 transition">
-                Enviar código
-            </button>
 
-            <p class="mt-4">Não tem conta ainda? 
-                <a href="{{ route('register') }}" class="text-blue-700 underline"> Registrar aqui </a> 
+            <x-ui.button class="w-full">
+                Enviar código
+            </x-ui.button>
+            
+            <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                Lembrou sua senha?
+                <a wire:navigate href="{{ route('login') }}" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Voltar ao login</a>
             </p>
         </form>
-
-        <x-toaster-hub />
-        
     </main>
+
+    <x-toaster-hub />
+</div>
 </div>

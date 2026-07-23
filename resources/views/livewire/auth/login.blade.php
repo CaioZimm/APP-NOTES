@@ -1,40 +1,58 @@
 <div>
-    <main class="w-full h-screen flex items-center justify-center">
-        <form wire:submit='login' class="bg-slate-300 flex items-center justify-start flex-col border border-black w-[30rem] h-[33rem] p-4 rounded-md shadow-md shadow-slate-600 mx-2">
-            <h1 class="text-4xl font-bold mb-[20px] mt-4">Login</h1>
+<div class="w-full min-h-screen flex items-center justify-center bg-gray-50 dark:bg-zinc-900 transition-colors duration-300">
+    <main class="w-full max-w-md px-6 py-8 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-none mx-4">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Bem-vindo!</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Acesse sua conta para continuar</p>
+        </div>
 
-            <label class="w-[90%] text-xl items-center mt-5">Email</label>
-            <input wire:model='email' type="email" placeholder="Digite seu email" class="placeholder:text-gray-500 placeholder:font-light placeholder:text-[16px]
-            w-[90%] h-10 bg-transparent text-blue-950 text-2xl outline-none border-b border-black">
-            @error('email')
-                <span class="text-red-600">{{ $message }}</span>
-            @enderror
-
-            <label class="w-[90%] text-xl items-center mt-7">Senha</label>
-            <input wire:model='password' type="password" placeholder="Digite sua senha" class="placeholder:text-gray-500 placeholder:font-light placeholder:text-[16px]
-            w-[90%] h-10 bg-transparent text-xl outline-none text-blue-950 border-b border-black">
-            @error('password')
-                <span class="text-red-600">{{ $message }}</span>
-            @enderror
-
-            <div class="flex items-center justify-start w-[90%] mt-2">
-                <input type="checkbox" wire:model='remember' class="w-4 h-4 mr-1 hover:cursor-pointer"> 
-                    <p class="text-gray-950"> Lembrar-me </p> 
-                </input>
+        <form wire:submit='login' class="space-y-6">
+            <div>
+                <x-ui.label for="email" class="mb-1">E-mail</x-ui.label>
+                <x-ui.input wire:model='email' id="email" type="email" placeholder="nome@gmail.com" :error="$errors->has('email')" required autofocus />
+                @error('email')
+                    <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+                @enderror
             </div>
 
-            <p class="mt-2 w-[90%]"> Esqueceu a senha? <a wire:navigate href="{{ route('reset-password') }}" class="text-blue-700 underline"> Clique aqui</a> </p>
+            <div x-data="{ show: false }">
+                <div class="flex items-center justify-between mb-1">
+                    <x-ui.label for="password">Senha</x-ui.label>
+                    <a wire:navigate href="{{ route('reset-password') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                        Esqueceu a senha?
+                    </a>
+                </div>
+                <div class="relative">
+                    <x-ui.input wire:model='password' id="password" x-bind:type="show ? 'text' : 'password'" placeholder="••••••••" :error="$errors->has('password')" required />
+                    <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+                        <i class="fa-solid fa-eye" x-show="!show"></i>
+                        <i class="fa-solid fa-eye-slash" x-show="show" x-cloak></i>
+                    </button>
+                </div>
+                @error('password')
+                    <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <button type="submit" class="hover:bg-gray-400 hover:text-black
-            mt-14 border border-black w-[90%] h-14 rounded-lg font-bold text-xl text-white bg-slate-800 transition">
-                Entrar 
-            </button>
+            <div class="flex items-center">
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input wire:model="remember" id="remember" type="checkbox" class="sr-only peer">
+                    <div class="w-10 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 select-none">Lembrar-me</span>
+                </label>
+            </div>
 
-            <p class="mt-4">Não tem conta ainda? 
-                <a href="{{ route('register') }}" class="text-blue-700 underline"> Registrar aqui </a> 
+            <x-ui.button class="w-full">
+                Entrar
+            </x-ui.button>
+            
+            <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+                Não tem uma conta? 
+                <a href="{{ route('register') }}" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Cadastre-se</a>
             </p>
         </form>
-
-        <x-toaster-hub />
     </main>
+
+    <x-toaster-hub />
+</div>
 </div>

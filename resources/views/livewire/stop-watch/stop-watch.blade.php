@@ -1,36 +1,75 @@
-<div class="h-full w-full flex justify-between items-center flex-col py-10 my-6">
-    <div>
-        @if ($isRun)
-            <div wire:poll.1000ms='count'></div>
-        @endif
-        <h1 class="text-8xl font-semibold"> {{ $formatted }} </h1>
+<div class="w-full max-w-sm flex flex-col items-center justify-center space-y-12"
+     x-data="{
+        time: 0,
+        isRun: false,
+        isPause: false,
+        interval: null,
+        get formatted() {
+            const min = Math.floor(this.time / 60);
+            const sec = this.time % 60;
+            return String(min).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+        },
+        play() {
+            this.isRun = true;
+            this.isPause = false;
+            this.interval = setInterval(() => {
+                this.time++;
+            }, 1000);
+        },
+        pause() {
+            this.isRun = false;
+            this.isPause = true;
+            clearInterval(this.interval);
+        },
+        resume() {
+            this.play();
+        },
+        restart() {
+            this.isRun = false;
+            this.isPause = false;
+            clearInterval(this.interval);
+            this.time = 0;
+        }
+     }">
+    
+    <!-- Relógio do Cronômetro -->
+    <div class="text-center">
+        <h1 class="text-7xl sm:text-8xl font-black font-mono tracking-tight text-gray-900 dark:text-white select-none" x-text="formatted">00:00</h1>
     </div>
 
-    <div class="w-full flex items-center justify-center">
-        @if($isRun)
-            <div class="w-full flex items-start justify-between mt-[11vh] px-2 gap-2 xs:justify-center xs:gap-40">
-                <button wire:click="pause" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
-                    <i class="fa-solid fa-pause text-xl"></i>
-                </button>
+    <!-- Controles -->
+    <div class="w-full px-4 flex items-center justify-center">
 
-                <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
-                    <i class="fa-solid fa-rotate-left text-xl"></i>
+        <!-- Rodando -->
+        <template x-if="isRun">
+            <div class="w-full flex gap-4">
+                <button @click="pause()" class="flex-1 py-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl font-bold shadow-lg shadow-yellow-500/10 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-pause text-lg"></i> Pausar
+                </button>
+                <button @click="restart()" class="flex-1 py-4 bg-gray-150 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-left text-lg"></i> Reiniciar
                 </button>
             </div>
-        @elseif($isPause)
-            <div class="w-full flex items-start justify-between mt-[11vh] px-2 gap-2 xs:justify-center xs:gap-40">
-                <button wire:click="return" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
-                    <i class="fa-solid fa-play text-xl"></i>
+        </template>
+        
+        <!-- Pausado -->
+        <template x-if="!isRun && isPause">
+            <div class="w-full flex gap-4">
+                <button @click="resume()" class="flex-1 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/15 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play text-lg"></i> Retomar
                 </button>
-
-                <button wire:click="restart" class="bg-slate-200 p-10 w-40 rounded-md items-center justify-center text-center flex h-20 border border-black transition-all hover:bg-blue-500">
-                    <i class="fa-solid fa-rotate-left text-xl"></i>
+                <button @click="restart()" class="flex-1 py-4 bg-gray-150 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-left text-lg"></i> Reiniciar
                 </button>
             </div>
-        @else
-            <button wire:click='play' class="bg-blue-600 p-10 rounded-full items-center justify-center text-center flex w-36 h-36 mt-10 border border-black">
-                <i class="fa-solid fa-play text-white text-5xl pl-3"></i>
+        </template>
+        
+        <!-- Parado / Inicial -->
+        <template x-if="!isRun && !isPause">
+            <button @click="play()" class="w-32 h-32 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 focus:outline-none">
+                <i class="fa-solid fa-play text-4xl pl-2"></i>
             </button>
-        @endif
+        </template>
+        
     </div>
 </div>
