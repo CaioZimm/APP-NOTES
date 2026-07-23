@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('photo')->nullable()->comment('Foto de Perfil');
+            $table->string('timezone')->default('America/Sao_Paulo');
             $table->rememberToken();
             $table->timestamps();
         });

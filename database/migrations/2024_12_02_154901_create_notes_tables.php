@@ -16,8 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('description', 510)->nullable();
+            $table->boolean('is_favorite')->default(false);
             $table->date('date');
             $table->timestamps();
+            $table->softDeletes();
 
             // Relacionamento VÁRIAS Anotações para UM usuário;
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
