@@ -2,14 +2,14 @@
 
 namespace App\Mail;
 
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Mail\Mailable;
+use Illuminate\Bus\Queueable;
+use App\Models\User;
+use Carbon\Carbon;
 
 class ForgotPassword extends Mailable
 {
@@ -18,16 +18,10 @@ class ForgotPassword extends Mailable
     /**
      * Create a new message instance.
      */
-    protected $token;
-    public function __construct(User $user)
+    public $token;
+    public function __construct(string $token)
     {
-        $this->token = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-
-        if(DB::select('select * from password_reset_tokens where email  = ?', [$user->email])){
-            DB::update("update password_reset_tokens set token = ?, created_at = ? WHERE email = ?", [$this->token, Carbon::now(), $user->email]);
-        }else{
-            DB::insert('insert into password_reset_tokens (email, token, created_at) values (?, ?, ?)', [$user->email, $this->token, Carbon::now()]);
-        }
+        $this->token = $token;
     }
 
     /**
