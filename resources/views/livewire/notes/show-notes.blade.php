@@ -8,6 +8,10 @@
                 <h1 class="font-bold text-3xl sm:text-4xl text-gray-900 dark:text-white">Minhas Anotações</h1>
                 <p class="text-gray-500 dark:text-gray-400 mt-1">Gerencie e organize suas ideias.</p>
             </div>
+            <a wire:navigate href="{{ route('notes.trash') }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg hover:border-red-300 dark:hover:border-red-700 transition-colors shadow-sm">
+                <i class="fa-solid fa-trash-can"></i>
+                Lixeira
+            </a>
         </div>
 
         {{-- Search + Filters --}}
@@ -37,6 +41,27 @@
                 Favoritos
             </button>
             
+            {{-- Filtro de Tags --}}
+            @if(isset($userTags) && $userTags->isNotEmpty())
+            <div class="relative w-full sm:w-auto">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <i class="fa-solid fa-tags text-gray-400 text-sm"></i>
+                </div>
+                <select 
+                    wire:model.live='selectedTagId' 
+                    class="w-full sm:w-48 pl-9 pr-8 py-2.5 text-sm rounded-lg bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 appearance-none cursor-pointer transition"
+                >
+                    <option value="">Todas as tags</option>
+                    @foreach($userTags as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                    @endforeach
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i>
+                </div>
+            </div>
+            @endif
+
             {{-- Filtro de Ordenação (Trazido para cá e estilizado) --}}
             <div class="relative w-full sm:w-auto">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -110,7 +135,7 @@
                                                 <i class="fa-solid fa-triangle-exclamation"></i>
                                             </div>
                                             <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Excluir Anotação</h2>
-                                            <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Tem certeza que deseja excluir esta anotação? Esta ação não pode ser desfeita.</p>
+                                            <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Tem certeza que deseja excluir esta anotação?</p>
                                             
                                             <div class="flex gap-3 justify-end w-full">
                                                 <button @click="open = false" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 rounded-lg transition-colors">

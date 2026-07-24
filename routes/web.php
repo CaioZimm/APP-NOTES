@@ -42,8 +42,8 @@ Route::middleware('auth')->group(function(){
 
     // ----------------- Page - Notes -------------------- //
     Route::get('/notes', ShowNotes::class)->name('notes');
-    Route::get('/notes/{note}', EditNote::class)->name('notes-edit');
     Route::get('/notes/trash', Trash::class)->name('notes.trash');
+    Route::get('/notes/{note}', EditNote::class)->name('notes-edit');
     
     // ----------------- Page - Tags -------------------- //
     Route::get('/tags', Index::class)->name('tags.index');
