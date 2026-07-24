@@ -6,6 +6,9 @@ echo "Deploy script started..."
 # Rodar o PHP-FPM em background
 php-fpm &
 
+# Aguardar o PHP-FPM estar pronto
+sleep 2
+
 # Cache das configurações e rotas para otimizar a performance
 php artisan config:cache
 php artisan route:cache
@@ -14,11 +17,13 @@ php artisan view:cache
 # Rodar migrações automaticamente
 php artisan migrate --force
 
-echo "Deploy script finished. Starting Nginx..."
+# Criar link simbólico do storage (para uploads de fotos)
+php artisan storage:link || true
 
-# Substituir a variável $PORT no nginx.conf e copiar para o lugar certo
-export PORT=${PORT:-80}
-envsubst '${PORT}' < /etc/nginx/sites-available/default > /etc/nginx/sites-enabled/default
+echo "Deploy script finished. Starting Nginx on port 80..."
+
+# Testar configuração do nginx antes de iniciar
+nginx -t
 
 # Iniciar o Nginx no modo foreground para manter o container vivo
-nginx -g "daemon off;"
+exec nginx -g "daemon off;"
