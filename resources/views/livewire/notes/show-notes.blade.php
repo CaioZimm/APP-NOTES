@@ -73,7 +73,7 @@
             {{-- Grid de Cards --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-4">
                 @foreach ($notes as $note)
-                    <div class="bg-white dark:bg-zinc-800 border {{ $note->is_favorite ? 'border-yellow-300 dark:border-yellow-700' : 'border-gray-200 dark:border-zinc-700' }} rounded-2xl p-5 hover:shadow-lg hover:shadow-gray-200/50 dark:hover:shadow-none transition-all duration-300 flex flex-col h-[22rem] group relative">
+                    <div wire:key="note-{{ $note->id }}" class="bg-white dark:bg-zinc-800 border {{ $note->is_favorite ? 'border-yellow-300 dark:border-yellow-700' : 'border-gray-200 dark:border-zinc-700' }} rounded-2xl p-5 hover:shadow-lg hover:shadow-gray-200/50 dark:hover:shadow-none transition-all duration-300 flex flex-col h-[22rem] group relative">
                         
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-medium px-2 py-1 bg-gray-100 dark:bg-zinc-700 text-gray-600 dark:text-gray-300 rounded-md">
@@ -87,20 +87,20 @@
                                     wire:click="toggleFavorite({{ $note->id }})"
                                     wire:loading.attr="disabled"
                                     wire:target="toggleFavorite({{ $note->id }})"
-                                    class="p-1.5 rounded-md transition-colors {{ $note->is_favorite ? 'text-yellow-500' : 'text-gray-300 dark:text-zinc-600 opacity-0 group-hover:opacity-100 hover:text-yellow-400' }}"
+                                    class="p-1.5 rounded-md transition-colors {{ $note->is_favorite ? 'text-yellow-500' : 'text-gray-300 dark:text-zinc-600 md:opacity-0 md:group-hover:opacity-100 hover:text-yellow-400' }}"
                                     title="{{ $note->is_favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos' }}"
                                 >
                                     <i class="fa-{{ $note->is_favorite ? 'solid' : 'regular' }} fa-star"></i>
                                 </button>
 
                                 {{-- Editar --}}
-                                <a wire:navigate href='/notes/{{ $note->id }}' class="p-1.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors opacity-0 group-hover:opacity-100">
+                                <a wire:navigate href='/notes/{{ $note->id }}' class="p-1.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors md:opacity-0 md:group-hover:opacity-100">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 
                                 {{-- Excluir --}}
                                 <div x-data="{ open: false }" class="relative">
-                                    <button @click="open = true" class="p-1.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors opacity-0 group-hover:opacity-100">
+                                    <button @click="open = true" class="p-1.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors md:opacity-0 md:group-hover:opacity-100">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 
@@ -166,6 +166,5 @@
 
         @endif
         
-        <x-toaster-hub />
     </main>
 </div>

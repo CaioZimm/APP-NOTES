@@ -25,7 +25,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-4">
             @foreach ($notes as $note)
-                <div class="bg-gray-50 dark:bg-zinc-800/80 border border-gray-200 dark:border-zinc-700 rounded-2xl p-5 hover:shadow-lg transition-all duration-300 flex flex-col h-[22rem] group relative opacity-75 hover:opacity-100">
+                <div wire:key="trash-{{ $note->id }}" class="bg-gray-50 dark:bg-zinc-800/80 border border-gray-200 dark:border-zinc-700 rounded-2xl p-5 hover:shadow-lg transition-all duration-300 flex flex-col h-[22rem] group relative opacity-75 hover:opacity-100">
                     <div class="flex justify-between items-start mb-3">
                         <span class="text-xs font-medium px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-md">
                             Excluída em {{ Carbon\Carbon::parse($note->deleted_at)->format('d M, Y') }}
@@ -80,6 +80,5 @@
 
         @endif
         
-        <x-toaster-hub />
     </main>
 </div>

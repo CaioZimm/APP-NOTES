@@ -26,6 +26,5 @@
         </form>
     </main>
 
-    <x-toaster-hub />
 </div>
 </div>

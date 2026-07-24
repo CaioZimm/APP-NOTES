@@ -49,11 +49,7 @@
                             </div>
                         </div>
 
-                        @if (session()->has('sucessPersonal'))
-                            <div class="text-sm text-green-600 font-bold mt-2 flex items-center gap-1.5">
-                                <i class="fa-solid fa-circle-check"></i> {{ session('sucessPersonal') }}
-                            </div>
-                        @endif
+
                     </form>
                 </section>
 
@@ -63,22 +59,40 @@
                         <i class="fa-solid fa-shield-halved text-blue-600"></i> Segurança (Senha)
                     </h2>
                     <form wire:submit='updatePassword' class="space-y-4">
-                        <div>
+                        <div x-data="{ show: false }">
                             <x-ui.label for="password" class="mb-1">Senha Atual</x-ui.label>
-                            <x-ui.input wire:model='password' id="password" type="password" placeholder="Digite sua senha atual" :error="$errors->has('password')" />
+                            <div class="relative">
+                                <x-ui.input wire:model='password' id="password" x-bind:type="show ? 'text' : 'password'" placeholder="Digite sua senha atual" :error="$errors->has('password')" class="pr-10" />
+                                <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                    <i class="fa-solid fa-eye" x-show="!show"></i>
+                                    <i class="fa-solid fa-eye-slash" x-show="show" x-cloak></i>
+                                </button>
+                            </div>
                             @error('password')
                                 <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
+                            <div x-data="{ show: false }">
                                 <x-ui.label for="new_password" class="mb-1">Nova Senha</x-ui.label>
-                                <x-ui.input wire:model='new_password' id="new_password" type="password" placeholder="Nova senha" :error="$errors->has('new_password')" />
+                                <div class="relative">
+                                    <x-ui.input wire:model='new_password' id="new_password" x-bind:type="show ? 'text' : 'password'" placeholder="Nova senha" :error="$errors->has('new_password')" class="pr-10" />
+                                    <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                        <i class="fa-solid fa-eye" x-show="!show"></i>
+                                        <i class="fa-solid fa-eye-slash" x-show="show" x-cloak></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div>
+                            <div x-data="{ show: false }">
                                 <x-ui.label for="new_password_confirmation" class="mb-1">Confirmar Senha</x-ui.label>
-                                <x-ui.input wire:model='new_password_confirmation' id="new_password_confirmation" type="password" placeholder="Confirmar nova senha" />
+                                <div class="relative">
+                                    <x-ui.input wire:model='new_password_confirmation' id="new_password_confirmation" x-bind:type="show ? 'text' : 'password'" placeholder="Confirmar nova senha" class="pr-10" />
+                                    <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                        <i class="fa-solid fa-eye" x-show="!show"></i>
+                                        <i class="fa-solid fa-eye-slash" x-show="show" x-cloak></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         @error('new_password')
@@ -184,6 +198,5 @@
             </div>
         </div>
 
-        <x-toaster-hub />
     </main>
 </div>

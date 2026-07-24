@@ -7,9 +7,9 @@
                 <h1 class="font-bold text-3xl text-gray-900 dark:text-white">Gerenciar Tags</h1>
                 <p class="text-gray-500 dark:text-gray-400">Crie tags coloridas para organizar suas anotações.</p>
             </div>
-            <a wire:navigate href="{{ route('notes') }}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors">
+            <button x-data @click="window.history.length > 1 ? window.history.back() : window.location.href='{{ route('notes') }}'" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors">
                 Voltar
-            </a>
+            </button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -85,6 +85,5 @@
             </div>
         </div>
         
-        <x-toaster-hub />
     </main>
 </div>
