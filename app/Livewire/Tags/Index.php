@@ -3,7 +3,6 @@
 namespace App\Livewire\Tags;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Masmerise\Toaster\Toaster;
 use Livewire\Component;
 use App\Models\Tag;

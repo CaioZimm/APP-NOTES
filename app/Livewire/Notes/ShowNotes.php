@@ -18,6 +18,7 @@ class ShowNotes extends Component
     public string $search = '';
     public string $orderBy = '';
     public bool $favoritesOnly = false;
+    public ?int $selectedTagId = null;
 
     protected $listeners = ['orderByUpdated'];
 
@@ -28,6 +29,12 @@ class ShowNotes extends Component
 
     public function updatedFavoritesOnly(): void
     {
+        $this->resetPage();
+    }
+    
+    public function selectTag(?int $tagId): void
+    {
+        $this->selectedTagId = $tagId;
         $this->resetPage();
     }
 
@@ -71,6 +78,12 @@ class ShowNotes extends Component
         if ($this->favoritesOnly) {
             $query->where('is_favorite', true);
         }
+        
+        if ($this->selectedTagId) {
+            $query->whereHas('tags', function ($q) {
+                $q->where('tags.id', $this->selectedTagId);
+            });
+        }
 
         switch ($this->orderBy) {
             case 'alphabetical':
@@ -91,6 +104,7 @@ class ShowNotes extends Component
 
         return view('livewire.notes.show-notes', [
             'notes' => $query->paginate(12),
+            'userTags' => Auth::user()->tags
         ]);
     }
 }

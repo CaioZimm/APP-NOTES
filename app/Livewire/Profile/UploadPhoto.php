@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Profile;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Masmerise\Toaster\Toaster;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Masmerise\Toaster\Toaster;
 
 class UploadPhoto extends Component
 {

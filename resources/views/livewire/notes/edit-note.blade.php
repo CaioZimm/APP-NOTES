@@ -23,9 +23,34 @@
 
                     {{-- Markdown Editor Side-by-Side --}}
                     <div x-data="{ 
-                            content: @entangle('description'), 
+                            content: {{ json_encode($description ?? '') }},
                             compiledMarkdown: '',
+                            draftKey: 'note_draft_{{ $note->id }}',
                             init() {
+                                // Restore draft from sessionStorage if it exists
+                                const draft = sessionStorage.getItem(this.draftKey);
+                                if (draft) {
+                                    try {
+                                        const data = JSON.parse(draft);
+                                        if (data.noteId === {{ $note->id }}) {
+                                            if (data.title !== undefined) $wire.set('title', data.title);
+                                            if (data.description !== undefined) {
+                                                this.content = data.description;
+                                                $wire.set('description', data.description);
+                                            }
+                                            if (data.date !== undefined) $wire.set('date', data.date);
+                                            if (data.selectedTags !== undefined) $wire.set('selectedTags', data.selectedTags);
+                                        }
+                                    } catch(e) {}
+                                    sessionStorage.removeItem(this.draftKey);
+                                }
+
+                                // Keep Livewire in sync whenever the content changes
+                                this.$watch('content', value => {
+                                    $wire.set('description', value);
+                                    this.updatePreview();
+                                });
+
                                 // Load marked.js dynamically if not loaded
                                 if (typeof marked === 'undefined') {
                                     const script = document.createElement('script');
@@ -35,26 +60,59 @@
                                 } else {
                                     this.updatePreview();
                                 }
-                                $watch('content', value => this.updatePreview());
                             },
                             updatePreview() {
                                 if (typeof marked !== 'undefined') {
                                     this.compiledMarkdown = marked.parse(this.content || '');
                                 }
+                            },
+                            get wordCount() {
+                                return (this.content || '').trim().split(/\s+/).filter(w => w.length > 0).length;
+                            },
+                            get charCount() {
+                                return (this.content || '').length;
+                            },
+                            downloadMarkdown() {
+                                const element = document.createElement('a');
+                                const file = new Blob([this.content || ''], {type: 'text/markdown'});
+                                element.href = URL.createObjectURL(file);
+                                const safeTitle = $wire.title ? $wire.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'anotacao';
+                                element.download = `${safeTitle}.md`;
+                                document.body.appendChild(element);
+                                element.click();
+                                document.body.removeChild(element);
+                            },
+                            saveDraftAndNavigate(url) {
+                                const draft = {
+                                    noteId: {{ $note->id }},
+                                    title: $wire.title,
+                                    description: this.content,
+                                    date: $wire.date,
+                                    selectedTags: $wire.selectedTags
+                                };
+                                sessionStorage.setItem(this.draftKey, JSON.stringify(draft));
+                                window.location.href = url;
                             }
                         }" 
                         class="border border-gray-200 dark:border-zinc-700 rounded-lg overflow-hidden bg-white dark:bg-zinc-900 flex flex-col md:flex-row shadow-sm min-h-[500px] h-[70vh] md:h-[500px]"
+                        id="markdown-editor-container"
                     >
                         {{-- Editor --}}
-                        <div class="w-full md:w-1/2 flex flex-col border-b md:border-b-0 md:border-r border-gray-200 dark:border-zinc-700">
-                            <div class="bg-gray-50 dark:bg-zinc-800 px-4 py-2 border-b border-gray-200 dark:border-zinc-700 text-sm font-medium text-gray-600 dark:text-gray-300">
-                                Markdown (Editor)
+                        <div class="w-full md:w-1/2 flex flex-col border-b md:border-b-0 md:border-r border-gray-200 dark:border-zinc-700 relative">
+                            <div class="bg-gray-50 dark:bg-zinc-800 px-4 py-2 border-b border-gray-200 dark:border-zinc-700 flex justify-between items-center text-sm font-medium text-gray-600 dark:text-gray-300">
+                                <span>Markdown (Editor)</span>
+                                <button type="button" @click="downloadMarkdown()" class="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+                                    <i class="fa-solid fa-download"></i> Baixar .md
+                                </button>
                             </div>
                             <textarea 
                                 x-model="content"
-                                class="flex-1 w-full p-4 bg-transparent border-none resize-none focus:ring-0 text-gray-800 dark:text-gray-200 font-mono text-sm"
+                                class="flex-1 w-full p-4 pb-8 bg-transparent border-none resize-none focus:ring-0 text-gray-800 dark:text-gray-200 font-mono text-sm"
                                 placeholder="Digite usando sintaxe Markdown..."
                             ></textarea>
+                            <div class="absolute bottom-2 right-4 text-xs text-gray-400 dark:text-gray-500 font-mono pointer-events-none">
+                                <span x-text="wordCount"></span> palavras | <span x-text="charCount"></span> caracteres
+                            </div>
                         </div>
                         
                         {{-- Preview --}}
@@ -68,6 +126,9 @@
                             >
                             </div>
                         </div>
+
+                        {{-- Hidden trigger so sidebar button can call saveDraftAndNavigate --}}
+                        <span id="editor-alpine-root" style="display:none"></span>
                     </div>
                 </div>
 
@@ -104,7 +165,25 @@
                                     </div>
                                 @endif
                                 <div class="mt-3">
-                                    <a wire:navigate href="{{ route('tags.index') }}" class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Gerenciar Tags</a>
+                                    {{-- Save draft before going to Tags page --}}
+                                    <button 
+                                        type="button"
+                                        x-data
+                                        @click="
+                                            const editorEl = document.querySelector('[x-data]');
+                                            const draftKey = 'note_draft_{{ $note->id }}';
+                                            const draft = {
+                                                noteId: {{ $note->id }},
+                                                title: $wire.title,
+                                                description: $wire.description,
+                                                date: $wire.date,
+                                                selectedTags: $wire.selectedTags
+                                            };
+                                            sessionStorage.setItem(draftKey, JSON.stringify(draft));
+                                            window.location.href = '{{ route('tags.index') }}';
+                                        "
+                                        class="text-xs text-blue-600 dark:text-blue-400 hover:underline bg-transparent border-0 p-0 cursor-pointer"
+                                    >Gerenciar Tags</button>
                                 </div>
                             </div>
                         </div>

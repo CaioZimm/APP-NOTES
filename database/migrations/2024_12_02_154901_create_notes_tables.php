@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->string('description', 510)->nullable();
+            $table->mediumText('description')->nullable();
             $table->boolean('is_favorite')->default(false);
             $table->date('date');
             $table->timestamps();

@@ -10,8 +10,14 @@
             <img src="{{ url("storage/{$user->photo}") }}" alt="Foto de Perfil" 
                  class="w-32 h-32 rounded-full border border-gray-200 dark:border-zinc-700 object-cover shadow-md transition-transform duration-300 group-hover:scale-105" >
         @else
-            <div class="w-32 h-32 rounded-full border border-gray-200 dark:border-zinc-700 bg-gray-150 dark:bg-zinc-750 flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-105 select-none">
-                <i class="fa-solid fa-user text-5xl text-gray-450 dark:text-zinc-500"></i>
+            @php
+                $initials = collect(explode(' ', trim($user->name)))
+                    ->map(fn($word) => mb_substr($word, 0, 1, 'UTF-8'))
+                    ->take(2)
+                    ->implode('');
+            @endphp
+            <div class="w-32 h-32 rounded-full border-2 border-white dark:border-zinc-800 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-105 select-none text-white font-bold text-4xl uppercase">
+                {{ $initials }}
             </div>
         @endif
         

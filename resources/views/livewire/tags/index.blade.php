@@ -56,7 +56,7 @@
                     @else
                         <ul class="divide-y divide-gray-100 dark:divide-zinc-700/50">
                             @foreach($tags as $tag)
-                                <li class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition-colors">
+                                <li wire:key="tag-{{ $tag->id }}" class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition-colors">
                                     <div class="flex items-center gap-3">
                                         <div class="w-4 h-4 rounded-full border border-gray-300 dark:border-gray-700" style="background-color: {{ $tag->color }}"></div>
                                         <span class="font-medium text-gray-900 dark:text-gray-100">{{ $tag->name }}</span>
@@ -70,10 +70,33 @@
                                             <button @click="confirm = true" class="p-1.5 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors" title="Excluir">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
-                                            <div x-show="confirm" @click.away="confirm = false" class="absolute right-0 top-full mt-1 bg-white dark:bg-zinc-800 shadow-lg border border-gray-200 dark:border-zinc-700 rounded p-2 flex gap-2 z-10 w-max" x-cloak>
-                                                <span class="text-xs text-gray-600 dark:text-gray-300 font-medium my-auto">Excluir?</span>
-                                                <button wire:click="delete({{ $tag->id }})" class="px-2 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700">Sim</button>
-                                                <button @click="confirm = false" class="px-2 py-1 bg-gray-200 text-gray-800 dark:bg-zinc-700 dark:text-gray-200 text-xs rounded">Não</button>
+
+                                            {{-- Fixed overlay modal to avoid overflow-hidden clipping --}}
+                                            <div
+                                                x-show="confirm"
+                                                x-cloak
+                                                class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm px-4"
+                                                x-transition.opacity
+                                            >
+                                                <div
+                                                    @click.away="confirm = false"
+                                                    class="bg-white dark:bg-zinc-800 shadow-2xl border border-gray-200 dark:border-zinc-700 rounded-2xl p-6 flex flex-col gap-4 max-w-xs w-full"
+                                                    x-transition.scale.origin.center
+                                                >
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="w-10 h-10 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center text-lg shrink-0">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </div>
+                                                        <div>
+                                                            <p class="font-semibold text-gray-900 dark:text-white text-sm">Excluir Tag?</p>
+                                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Esta ação não pode ser desfeita.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex gap-2 justify-end">
+                                                        <button @click="confirm = false" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-gray-800 dark:text-gray-200 text-sm font-medium rounded-lg transition-colors">Cancelar</button>
+                                                        <button @click="confirm = false" wire:click="delete({{ $tag->id }})" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors">Excluir</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

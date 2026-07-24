@@ -18,7 +18,7 @@
             <div x-data="{ show: false }">
                 <x-ui.label for="newpassword" class="mb-1">Nova senha</x-ui.label>
                 <div class="relative">
-                    <x-ui.input wire:model='newpassword' id="newpassword" x-bind:type="show ? 'text' : 'password'" placeholder="••••••••" :error="$errors->has('newpassword')" required class="pr-10" />
+                    <x-ui.input wire:model='newpassword' id="newpassword" type="password" x-bind:type="show ? 'text' : 'password'" placeholder="••••••••" :error="$errors->has('newpassword')" required class="pr-10" />
                     <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                         <i class="fa-solid fa-eye" x-show="!show"></i>
                         <i class="fa-solid fa-eye-slash" x-show="show" x-cloak></i>
@@ -32,7 +32,7 @@
             <div x-data="{ show: false }">
                 <x-ui.label for="newpassword_confirmation" class="mb-1">Confirmar nova senha</x-ui.label>
                 <div class="relative">
-                    <x-ui.input wire:model='newpassword_confirmation' id="newpassword_confirmation" x-bind:type="show ? 'text' : 'password'" placeholder="••••••••" :error="$errors->has('newpassword_confirmation')" required class="pr-10" />
+                    <x-ui.input wire:model='newpassword_confirmation' id="newpassword_confirmation" type="password" x-bind:type="show ? 'text' : 'password'" placeholder="••••••••" :error="$errors->has('newpassword_confirmation')" required class="pr-10" />
                     <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                         <i class="fa-solid fa-eye" x-show="!show"></i>
                         <i class="fa-solid fa-eye-slash" x-show="show" x-cloak></i>

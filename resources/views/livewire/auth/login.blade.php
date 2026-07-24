@@ -7,6 +7,13 @@
             </div>
 
             <form wire:submit='login' class="space-y-6">
+                @error('rate_limit')
+                    <div class="p-3 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 rounded-lg flex items-center gap-3">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span class="text-sm font-medium">{{ $message }}</span>
+                    </div>
+                @enderror
+                
                 <div>
                     <x-ui.label for="email" class="mb-1">E-mail</x-ui.label>
                     <x-ui.input wire:model='email' id="email" type="email" placeholder="nome@gmail.com" :error="$errors->has('email')" required autofocus />

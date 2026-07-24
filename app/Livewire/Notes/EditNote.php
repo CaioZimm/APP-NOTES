@@ -42,7 +42,9 @@ class EditNote extends Component
             'date' => $this->date,
         ]);
 
-        $this->note->tags()->sync($this->selectedTags);
+        $validTagIds = Auth::user()->tags()->pluck('id')->toArray();
+        $safeTagIds = array_values(array_intersect(array_map('intval', $this->selectedTags ?? []), $validTagIds));
+        $this->note->tags()->sync($safeTagIds);
 
         Toaster::success('Anotação atualizada com sucesso!');
         return Redirect::to('/notes');
