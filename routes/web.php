@@ -41,7 +41,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/profile', ProfileUser::class)->name('profile');
 
     // ----------------- Page - Notes -------------------- //
-    Route::get('/notes/create', CreateNote::class)->name('notes.create');
     Route::get('/notes', ShowNotes::class)->name('notes');
     Route::get('/notes/{note}', EditNote::class)->name('notes-edit');
     Route::get('/notes/trash', Trash::class)->name('notes.trash');

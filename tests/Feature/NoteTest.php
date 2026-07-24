@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Livewire\Notes\CreateNote;
+use App\Livewire\Modal\CreateNotes;
 use App\Livewire\Notes\EditNote;
 use Livewire\Livewire;
 use App\Models\User;
@@ -28,12 +28,12 @@ class NoteTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::actingAs($user)
-            ->test(CreateNote::class)
+            ->test(CreateNotes::class)
             ->set('title', 'My New Note')
             ->set('description', 'Content of the note')
             ->set('date', '2023-10-10')
-            ->call('save')
-            ->assertRedirect('/notes');
+            ->call('create')
+            ->assertRedirect('/');
 
         $this->assertDatabaseHas('notes', [
             'title' => 'My New Note',
