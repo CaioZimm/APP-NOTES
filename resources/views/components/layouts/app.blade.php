@@ -34,7 +34,7 @@
         @endif
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563EB'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E">
 
-        <title>{{ $title ?? 'App - Notas' }}</title>
+        <title>{{ $title ?? 'Notely' }}</title>
     </head>
     <body>
         {{ $slot }}
