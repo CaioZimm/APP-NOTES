@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
@@ -11,7 +12,7 @@ use Illuminate\Bus\Queueable;
 use App\Models\User;
 use Carbon\Carbon;
 
-class ForgotPassword extends Mailable
+class ForgotPassword extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -40,7 +41,7 @@ class ForgotPassword extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails/forgot_password',
+            view: 'emails.forgot_password',
             with: [
                 'token' => $this->token,
             ],

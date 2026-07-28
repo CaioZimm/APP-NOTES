@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Password;
 
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\PasswordResetService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\User;
 
@@ -20,11 +22,21 @@ class ConfirmationNewPassword extends Component
         return view('livewire.password.confirmation-new-password');
     }
 
-    public function resetNewPassword(){
+    public function resetNewPassword(Request $request){
         $this->validate([
             'token' => ['required', 'max:6', 'min:6'],
             'newpassword' => ['required', 'string', 'confirmed', 'max:16', 'min:4'],
         ]);
+
+        $key = 'confirm-password:' . $request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            $seconds = RateLimiter::availableIn($key);
+            Toaster::error("Muitas tentativas. Tente novamente em {$seconds} segundos.");
+            return;
+        }
+
+        RateLimiter::hit($key, 60 * 5);
 
         $email = session('reset_email');
         if (!$email) {
@@ -52,6 +64,7 @@ class ConfirmationNewPassword extends Component
         
         DB::table('password_reset_tokens')->where('email', $user->email)->delete();
         session()->forget('reset_email');
+        RateLimiter::clear($key);
 
         Toaster::success('Senha redefinida com sucesso!');
         return Redirect::to('/login');

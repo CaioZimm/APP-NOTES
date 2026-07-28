@@ -3,11 +3,8 @@ set -e
 
 echo "Deploy script started..."
 
-# Rodar o PHP-FPM em background
-php-fpm &
-
-# Aguardar o PHP-FPM estar pronto
-sleep 2
+# Criar diretório para logs do supervisor
+mkdir -p /var/log/supervisor
 
 # Cache das configurações e rotas para otimizar a performance
 php artisan config:cache
@@ -20,10 +17,7 @@ php artisan migrate --force
 # Criar link simbólico do storage (para uploads de fotos)
 php artisan storage:link || true
 
-echo "Deploy script finished. Starting Nginx on port 80..."
+echo "Deploy script finished. Starting Supervisord..."
 
-# Testar configuração do nginx antes de iniciar
-nginx -t
-
-# Iniciar o Nginx no modo foreground para manter o container vivo
-exec nginx -g "daemon off;"
+# Iniciar o Supervisord que vai gerenciar Nginx, PHP-FPM, Queue e Scheduler
+exec /usr/bin/supervisord -n -c /etc/supervisor/conf.d/supervisord.conf

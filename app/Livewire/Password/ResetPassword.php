@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Password;
 
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\PasswordResetService;
 use Illuminate\Support\Facades\Mail;
@@ -25,6 +26,16 @@ class ResetPassword extends Component
             'email' => ['required', 'email', 'exists:users'],
         ]);
 
+        $key = 'reset-password:' . $request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, 3)) {
+            $seconds = RateLimiter::availableIn($key);
+            Toaster::error("Muitas tentativas. Tente novamente em {$seconds} segundos.");
+            return;
+        }
+
+        RateLimiter::hit($key, 60 * 5);
+
         $user = User::where('email', $this->email)->first();
 
         if(!$user){
@@ -35,8 +46,7 @@ class ResetPassword extends Component
         $token = (new PasswordResetService())->createToken($user->email);
         
         session()->put('reset_email', $user->email);
-
-        Mail::to($user)->send(new ForgotPassword($token));
+        Mail::to($user)->send(new ForgotPassword($token, $user->email));
 
         Toaster::success('Código enviado para o email informado.');
         return redirect()->to('/new-password');

@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y \
     nginx \
     nodejs \
     npm \
-    gettext-base
+    gettext-base \
+    supervisor
 
 # Limpar cache do apt
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -42,6 +43,9 @@ RUN npm run build
 
 # Copiar arquivo de configuração do Nginx
 COPY ./docker/nginx.conf /etc/nginx/sites-available/default
+
+# Copiar arquivo de configuração do Supervisord
+COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Expor a porta 80 (padrão de plataformas como Render)
 EXPOSE 80
