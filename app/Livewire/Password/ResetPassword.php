@@ -46,7 +46,7 @@ class ResetPassword extends Component
         $token = (new PasswordResetService())->createToken($user->email);
         
         session()->put('reset_email', $user->email);
-        Mail::to($user)->send(new ForgotPassword($token, $user->email));
+        Mail::to($user)->send(new ForgotPassword($token));
 
         Toaster::success('Código enviado para o email informado.');
         return redirect()->to('/new-password');
