@@ -38,4 +38,42 @@ class Note extends Model
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
+
+    // --- Query Scopes ---
+
+    public function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', '%' . $search . '%')
+              ->orWhere('description', 'like', '%' . $search . '%');
+        });
+    }
+
+    public function scopeFavorites(Builder $query, bool $favoritesOnly): Builder
+    {
+        if ($favoritesOnly) {
+            return $query->where('is_favorite', true);
+        }
+        return $query;
+    }
+
+    public function scopeByTag(Builder $query, ?int $tagId): Builder
+    {
+        if ($tagId) {
+            return $query->whereHas('tags', function ($q) use ($tagId) {
+                $q->where('tags.id', $tagId);
+            });
+        }
+        return $query;
+    }
+
+    public function scopeSort(Builder $query, string $orderBy): Builder
+    {
+        return match ($orderBy) {
+            'alphabetical' => $query->orderBy('title', 'asc'),
+            'newest' => $query->orderBy('date', 'desc'),
+            'oldest' => $query->orderBy('date', 'asc'),
+            default => $query->orderBy('is_favorite', 'desc')->orderBy('created_at', 'desc'),
+        };
+    }
 }

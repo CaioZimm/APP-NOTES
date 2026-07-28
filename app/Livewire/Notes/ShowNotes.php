@@ -66,41 +66,13 @@ class ShowNotes extends Component
 
     public function render()
     {
-        $query = Note::query()->with('tags')->where('user_id', Auth::id());
-
-        if ($this->search !== '') {
-            $query->where(function ($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%');
-            });
-        }
-
-        if ($this->favoritesOnly) {
-            $query->where('is_favorite', true);
-        }
-        
-        if ($this->selectedTagId) {
-            $query->whereHas('tags', function ($q) {
-                $q->where('tags.id', $this->selectedTagId);
-            });
-        }
-
-        switch ($this->orderBy) {
-            case 'alphabetical':
-                $query->orderBy('title', 'asc');
-                break;
-            case 'newest':
-                $query->orderBy('date', 'desc');
-                break;
-            case 'oldest':
-                $query->orderBy('date', 'asc');
-                break;
-            case 'favorites':
-                $query->orderBy('is_favorite', 'desc')->orderBy('created_at', 'desc');
-                break;
-            default:
-                $query->orderBy('is_favorite', 'desc')->orderBy('created_at', 'desc');
-        }
+        $query = Note::query()
+            ->with('tags')
+            ->where('user_id', Auth::id())
+            ->when($this->search !== '', fn($q) => $q->search($this->search))
+            ->favorites($this->favoritesOnly)
+            ->byTag($this->selectedTagId)
+            ->sort($this->orderBy);
 
         return view('livewire.notes.show-notes', [
             'notes' => $query->paginate(12),
